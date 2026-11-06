@@ -1,0 +1,136 @@
+---
+/** Your Path: the three tiers side by side, and gentle guidance on where to begin. Static. */
+import CtaBand from '../components/CtaBand.astro';
+import PageHero from '../components/PageHero.astro';
+import PathTiers from '../components/PathTiers.astro';
+import Base from '../layouts/Base.astro';
+import {breadcrumbJsonLd} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const fits = [
+  {
+    q: 'What if a conflict is weighing on us right now?',
+    a: 'The 7-Day Conflict Prevention Challenge is a quiet place to start: seven days, nine videos, no experience needed, and free.',
+    href: '/challenge',
+    link: 'The 7-Day Challenge',
+  },
+  {
+    q: 'What if we already hold conflict for others, as mediators, coaches or HR professionals?',
+    a: 'Beyond Resolution is a free series of three live sessions for practitioners. When the work calls for tools in the room, the Exploration Kit follows naturally.',
+    href: '/beyond-resolution',
+    link: 'Beyond Resolution',
+  },
+  {
+    q: 'What if we are raising or teaching children?',
+    a: 'The Seven Steps to Peace is a free illustrated picture book, written to be read aloud together.',
+    href: '/childrens-book',
+    link: 'The children’s book',
+  },
+  {
+    q: 'What if we sense this is our life’s work?',
+    a: 'The Seven Levels Practitioner Certification is fourteen live sessions across every level, with specializations in mediation and coaching.',
+    href: '/certification',
+    link: 'The certification',
+  },
+];
+
+const rows = [
+  {label: 'What it is', explore: 'A video challenge, a live series and a picture book', build: 'Card deck, companion workbook and live webinar', deep: '14 live virtual sessions'},
+  {label: 'Time', explore: 'Seven days for the challenge; three live sessions for the series', build: 'Ongoing, whenever we practise', deep: '42 hours over 14 Thursdays'},
+  {label: 'Investment', explore: 'Free', build: '$147 USD', deep: '$2,646 USD, or 7 payments of $378 USD'},
+  {label: 'Best for', explore: 'Anyone curious, and anyone in conflict now', build: 'Practitioners, leaders and teams', deep: 'Practitioners ready to certify'},
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Your path"
+  description="Three ways to develop Conflict Intelligence: Explore for free, build skills with the Conflict Exploration Kit, or go deep with the Seven Levels Practitioner Certification."
+  jsonLd={breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Your path', path: '/your-path'},
+  ])}>
+  <main>
+    <PageHero
+      eyebrow="Your path"
+      title="Three ways to walk with us"
+      lede="Explore, build skills, go deep. Each tier stands on its own, and each one prepares the ground for the next. There is no rush to move between them."
+      image="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1100&q=70"
+      alt="A person standing with open arms facing a sunrise"
+    />
+
+    <section class="band band-canvas" aria-label="The three tiers">
+      <div class="wrap">
+        <PathTiers headingLevel="h2" />
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="fit-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Where might we begin?</p>
+          <h2 id="fit-heading">A few questions to help us choose</h2>
+        </div>
+        <div class="grid grid-2">
+          {
+            fits.map(fit => (
+              <a class="card" href={fit.href}>
+                <h3>{fit.q}</h3>
+                <p class="muted">{fit.a}</p>
+                <span class="text-link">{fit.link} →</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="compare-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <h2 id="compare-heading">The tiers side by side</h2>
+        </div>
+        <div class="table-card">
+          <table class="compare tnum">
+            <caption class="sr-only">The three tiers compared</caption>
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Explore</th>
+                <th scope="col">Build skills</th>
+                <th scope="col">Go deep</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                rows.map(row => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td>{row.explore}</td>
+                    <td>{row.build}</td>
+                    <td>{row.deep}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Begin with the free challenge"
+      body="Seven days, nine videos. What might we notice?"
+      href="/challenge"
+      label="Begin the challenge"
+    />
+  </main>
+</Base>

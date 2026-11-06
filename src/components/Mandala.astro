@@ -1,0 +1,60 @@
+---
+/**
+ * The Seven Levels as a mandala: seven rings of petals, Space on the outside,
+ * Spirituality at the centre. Each ring links to its level on /seven-levels
+ * (or to `#<slug>` on that page itself). Pure SVG, no image request.
+ */
+import {LEVELS} from '../content/site';
+
+interface Props {
+  /** Prefix for each ring's link; '' links within the current page. */
+  base?: string;
+  label?: string;
+}
+
+const {base = '/seven-levels', label = 'The Seven Levels mandala'} = Astro.props;
+
+const C = 200;
+const PETALS = 14;
+const radii = [194, 168, 142, 116, 90, 64, 38];
+
+/** One petal from the centre to radius r, width w, pointing up. */
+const petal = (r: number, w: number) =>
+  `M0 0 C ${w} ${-r * 0.32}, ${w} ${-r * 0.72}, 0 ${-r} C ${-w} ${-r * 0.72}, ${-w} ${-r * 0.32}, 0 0 Z`;
+
+const rings = LEVELS.map((level, i) => {
+  const r = radii[i];
+  const offset = i % 2 === 0 ? 0 : 180 / PETALS;
+  const d = petal(r, r * 0.26);
+  return {
+    level,
+    paths: Array.from({length: PETALS}, (_, k) => ({d, rotate: offset + (360 / PETALS) * k})),
+  };
+});
+const titleId = `mandala-title-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg class="mandala" viewBox="0 0 400 400" role="img" aria-labelledby={titleId}>
+  <title id={titleId}>{label}: Space, Emotions, Identity, Relationships, Expression, Intuition and Spirituality, from the outside in.</title>
+  <g transform={`translate(${C} ${C})`}>
+    {
+      rings.map(({level, paths}) => (
+        <a href={`${base}#${level.slug}`} aria-label={`Level ${level.n}: ${level.name}`}>
+          <title>{`Level ${level.n}: ${level.name}`}</title>
+          {paths.map(p => (
+            <path
+              d={p.d}
+              transform={`rotate(${p.rotate})`}
+              fill={level.color}
+              stroke="#ffffff"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+          ))}
+        </a>
+      ))
+    }
+    <circle r="14" fill="#ffffff"></circle>
+    <circle r="6" fill="#935EB2"></circle>
+  </g>
+</svg>

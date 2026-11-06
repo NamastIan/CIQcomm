@@ -1,0 +1,41 @@
+---
+/**
+ * A page's opening: eyebrow, the page's only <h1>, a lede, a button row
+ * (slot "actions") and a photo beside it (below it on phones).
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  image?: string;
+  alt?: string;
+  /** Image frame shape. */
+  shape?: 'landscape' | 'wide' | 'square' | 'tall';
+}
+
+const {eyebrow, title, lede, image, alt = '', shape = 'landscape'} = Astro.props;
+---
+
+<section class="hero">
+  <div class:list={['wrap', image ? 'hero-split' : 'hero-solo']}>
+    <div class="hero-copy">
+      {eyebrow && <p class="eyebrow brand">{eyebrow}</p>}
+      <h1>{title}</h1>
+      {lede && <p class="lede">{lede}</p>}
+      <slot />
+      {Astro.slots.has('actions') && (
+        <div class="actions">
+          <slot name="actions" />
+        </div>
+      )}
+    </div>
+    {
+      image && (
+        <figure class:list={['media', shape === 'landscape' ? '' : shape]}>
+          <img src={image} alt={alt} width="960" height="720" fetchpriority="high" decoding="async" />
+        </figure>
+      )
+    }
+    <slot name="aside" />
+  </div>
+</section>

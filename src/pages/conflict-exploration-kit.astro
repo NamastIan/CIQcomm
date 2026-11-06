@@ -1,0 +1,222 @@
+---
+/**
+ * The Conflict Exploration Kit: sales page. $147: a physical card deck, a
+ * companion workbook and a live webinar. Static. Purchase link:
+ * `LINKS.kitPurchase` (an App page).
+ */
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import PageHero from '../components/PageHero.astro';
+import {LEVELS, LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, faqJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const parts = [
+  {badge: 'Physical', title: 'The card deck', body: 'A physical deck of three cards, each with a specific task: Engage, Reflect and Resolve.'},
+  {badge: 'Physical', title: 'The companion workbook', body: 'A workbook to accompany the deck, shipped with it.'},
+  {badge: 'Live', title: 'The live webinar', body: 'An invitation to a live webinar, sent after purchase.'},
+];
+
+const cards = ['Engage', 'Reflect', 'Resolve'];
+
+const faq = [
+  {
+    q: 'What does the kit cost?',
+    a: 'The Conflict Exploration Kit is $147 USD. It includes the physical card deck, the companion workbook and an invitation to a live webinar.',
+  },
+  {
+    q: 'Where does the kit ship?',
+    a: 'Shipping regions, costs and delivery times are set out on our Shipping page.',
+  },
+  {
+    q: 'Is there support as we begin?',
+    a: 'Yes. The companion workbook accompanies the deck, and every purchase comes with an invitation to a live webinar.',
+  },
+  {
+    q: 'Is the kit included in the certification?',
+    a: 'Certification includes the physical card deck only, shipped before session one. The companion workbook and the live webinar come with the kit itself.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Conflict Exploration Kit',
+    description:
+      'A physical card deck, a companion workbook and a live webinar for exploring conflict through the Seven Levels Framework.',
+    url: abs(origin, '/conflict-exploration-kit'),
+    brand: {'@type': 'Brand', name: ORG_NAME},
+    offers: {
+      '@type': 'Offer',
+      price: '147.00',
+      priceCurrency: 'USD',
+      url: abs(origin, '/conflict-exploration-kit'),
+    },
+  },
+  faqJsonLd(faq),
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Your path', path: '/your-path'},
+    {name: 'Conflict Exploration Kit', path: '/conflict-exploration-kit'},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Conflict Exploration Kit"
+  description="The Conflict Exploration Kit: a physical card deck, a companion workbook and a live webinar for exploring conflict through the Seven Levels Framework. $147 USD."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Build skills"
+      title="The Conflict Exploration Kit"
+      lede="A physical card deck, a companion workbook and a live webinar for exploring conflict through all seven levels. Something to hold in our hands when a conversation becomes hard."
+      image="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1100&q=70"
+      alt="Four people talking together around a café table">
+      <div class="price">
+        <strong>$147</strong>
+        <span>USD · Card deck, companion workbook and live webinar</span>
+      </div>
+      <Fragment slot="actions">
+        <a class="button" href={LINKS.kitPurchase}>Get the kit</a>
+        <a class="button ghost" href="#inside">What is inside</a>
+      </Fragment>
+    </PageHero>
+
+    <section class="band band-canvas" id="inside" aria-labelledby="inside-heading" style="scroll-margin-top: 64px">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">What is inside</p>
+          <h2 id="inside-heading">Three parts that work together</h2>
+        </div>
+        <div class="grid grid-3">
+          {
+            parts.map(part => (
+              <div class="card">
+                <span class="badge">{part.badge}</span>
+                <h3>{part.title}</h3>
+                <p class="muted">{part.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="levels-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Seven levels, seven colours</p>
+          <h2 id="levels-heading">The seven levels</h2>
+          <p class="muted">The kit explores conflict through the seven levels of the Seven Levels Framework.</p>
+        </div>
+        <div class="level-grid">
+          {
+            LEVELS.map(level => (
+              <div class="card level-card" style={`--level: ${level.color}`}>
+                <span class="level-num">Level {level.n}</span>
+                <h3>{level.name}</h3>
+              </div>
+            ))
+          }
+          <a class="card level-card" href="/seven-levels" style="--level: var(--line-control)">
+            <span class="level-num">The framework</span>
+            <h3>Read about each level</h3>
+            <p class="muted">What every level explores, in depth.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="after-heading" style="padding-top: 0">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <p class="eyebrow">After purchase</p>
+          <h2 id="after-heading">What happens after purchase</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>We ship the deck and the workbook</h3>
+              <p class="muted">Regions, costs and delivery times are on our <a href="/legal/shipping">Shipping page</a>.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>We invite you to a live webinar</h3>
+              <p class="muted">The invitation follows your purchase.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Attending opens a members’ badge group</h3>
+              <p class="muted">Joining the webinar opens a members’ badge group in the community.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="uses-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">The deck</p>
+          <h2 id="uses-heading">Three cards, three tasks</h2>
+          <p class="muted">The deck holds three cards. Each one carries a specific task.</p>
+        </div>
+        <div class="grid grid-3">
+          {
+            cards.map((card, i) => (
+              <div class="card">
+                <span class="eyebrow">Card {i + 1}</span>
+                <h3>{card}</h3>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="buy-heading">
+      <div class="wrap split top">
+        <div class="stack">
+          <h2 id="buy-heading">Questions about the kit</h2>
+          <Faq items={faq} />
+        </div>
+        <div class="card price-card">
+          <span class="badge brand">Build skills</span>
+          <h3>Conflict Exploration Kit</h3>
+          <div class="price">
+            <strong>$147</strong>
+            <span>USD, one time</span>
+          </div>
+          <ul class="checklist">
+            <li>Physical card deck and companion workbook, shipped to you</li>
+            <li>An invitation to a live webinar</li>
+            <li>Included with the Practitioner Certification (the physical card deck only)</li>
+          </ul>
+          <a class="button" href={LINKS.kitPurchase}>Get the kit</a>
+          <p class="note">Checkout happens securely in our community.</p>
+        </div>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Ready to go deeper?"
+      body="The Seven Levels Practitioner Certification includes a physical card deck and fourteen live sessions."
+      href="/certification"
+      label="About certification"
+    />
+  </main>
+</Base>

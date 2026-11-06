@@ -1,0 +1,149 @@
+---
+/** Privacy Policy. DRAFT pending legal review. Static. */
+import Legal from '../../layouts/Legal.astro';
+import {staticContext} from '../../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+---
+
+<Legal
+  site={site}
+  viewer={viewer}
+  title="Privacy Policy"
+  path="/legal/privacy"
+  description="How NAMASTE International Inc., operating Conflict Intelligence Training, collects, uses and protects personal information under Canadian privacy law.">
+  <section class="legal-section">
+    <h2>Who we are</h2>
+    <p>
+      NAMASTE International Inc. (Canada) operates Conflict Intelligence Training: this website, our online community,
+      our programs and our products. We are responsible for the personal information we collect and hold. Our privacy
+      contact can be reached at <a href="mailto:hello@namasteintl.com">hello@namasteintl.com</a>.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>Name and email address</strong>, when you join the community, make a purchase or write to us.</li>
+      <li><strong>Profile information</strong> you choose to add to your community profile.</li>
+      <li>
+        <strong>Content members share</strong> in the community, such as posts, comments, messages and files.
+      </li>
+      <li>
+        <strong>Order information</strong>, such as what was purchased and the billing and shipping details needed to
+        complete an order. Payment card details are entered with Stripe; we do not receive or store full card numbers.
+      </li>
+      <li>
+        <strong>Usage data</strong>, such as pages visited, the type of device and browser, IP address and how the
+        community is used.
+      </li>
+    </ul>
+    <p>Members may read in the community without posting. Sharing is always a choice.</p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Why we collect it</h2>
+    <ul>
+      <li>To create and run your community account.</li>
+      <li>To deliver our programs, the Conflict Exploration Kit and the Practitioner Certification.</li>
+      <li>To process payments and ship orders.</li>
+      <li>To send the emails you have asked for, and other updates where you have agreed to receive them.</li>
+      <li>To reply when you write to us.</li>
+      <li>To keep the community safe and to uphold the Community Guidelines.</li>
+      <li>To understand how the website and community are used, so that we can improve them.</li>
+    </ul>
+    <p>We collect and use personal information with your consent, and only for the purposes we describe here.</p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Who processes it for us</h2>
+    <ul>
+      <li>
+        <strong>Our community platform</strong> (EzyCommunity) hosts this website and our community, including accounts,
+        profiles and the content members share.
+      </li>
+      <li><strong>Stripe</strong> processes payments.</li>
+      <li><strong>Encharge</strong> sends our emails.</li>
+      <li><strong>Shipping carriers</strong> receive the name and address needed to deliver an order.</li>
+      <li>
+        <strong>Google Fonts</strong> delivers the typeface this website uses, and receives your device's IP address when
+        a page loads.
+      </li>
+    </ul>
+    <p>
+      These providers may store or process information outside Canada, including in the United States. When they do, the
+      information is subject to the laws of the country where it is held.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Cookies</h2>
+    <p>
+      The community uses cookies to keep you signed in and to protect your account. These cookies are necessary: without
+      them, signing in does not work. The website may also keep small settings in your browser, such as whether you have
+      just signed in.
+    </p>
+    <p>
+      Analytics or marketing cookies: <mark>[ANALYTICS AND MARKETING COOKIES: Ian to confirm whether any are used, and
+      which]</mark>. Email open and click tracking: <mark>[EMAIL TRACKING: Ian to confirm whether it is enabled in
+      Encharge]</mark>.
+    </p>
+    <p>You might choose to block or delete cookies in your browser settings, though signing in will then not work.</p>
+  </section>
+
+  <section class="legal-section">
+    <h2>How long we keep it</h2>
+    <p>
+      We keep personal information only as long as we need it for the purposes above, and then delete it or make it
+      anonymous.
+    </p>
+    <ul>
+      <li>Account and profile information: <mark>[DATA RETENTION PERIOD FOR ACCOUNTS: Ian to confirm]</mark>.</li>
+      <li>Order and payment records: <mark>[DATA RETENTION PERIOD FOR ORDER RECORDS: Ian to confirm]</mark>.</li>
+      <li>Messages sent to us: <mark>[DATA RETENTION PERIOD FOR MESSAGES: Ian to confirm]</mark>.</li>
+    </ul>
+  </section>
+
+  <section class="legal-section">
+    <h2>Access, correction, deletion and consent</h2>
+    <p>You may ask us at any time to:</p>
+    <ul>
+      <li>tell you what personal information we hold about you, and give you a copy;</li>
+      <li>correct information that is inaccurate or incomplete;</li>
+      <li>delete your information and close your account;</li>
+      <li>withdraw your consent to a use of your information, including marketing emails.</li>
+    </ul>
+    <p>
+      Write to <a href="mailto:hello@namasteintl.com">hello@namasteintl.com</a>. We may ask you to confirm your identity
+      first, and we reply within 30 days. Every marketing email also includes a link to unsubscribe. Withdrawing consent
+      may mean we can no longer provide some services, and we will explain what that means when you ask.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Keeping it safe</h2>
+    <p>
+      We use reasonable safeguards to protect personal information from loss, theft and unauthorized access. No system
+      is perfectly secure, so we also ask members to share thoughtfully.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Canadian privacy law</h2>
+    <p>
+      We handle personal information in line with Canada's Personal Information Protection and Electronic Documents Act
+      (PIPEDA) and any provincial privacy law that applies. If you have a concern, we invite you to write to us first. You
+      may also contact the Office of the Privacy Commissioner of Canada.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Changes to this policy</h2>
+    <p>
+      When we change this policy, we update the effective date above. When a change is significant, we tell members by
+      email or in the community.
+    </p>
+  </section>
+</Legal>

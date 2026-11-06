@@ -1,0 +1,140 @@
+---
+/**
+ * The Community: what happens inside, and how to join. The community itself is
+ * the App (`/feeds`, `/join`, `/login`): plain links. Static; members see
+ * "Open the community" instead of "Join" once the header knows them.
+ */
+import PageHero from '../components/PageHero.astro';
+import {LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {breadcrumbJsonLd} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const inside = [
+  {
+    title: 'Conversations',
+    body: 'A calm place to share what we are noticing, ask questions and learn from people walking a similar path.',
+  },
+  {
+    title: 'Free programs',
+    body: 'The 7-Day Conflict Prevention Challenge, the Beyond Resolution live sessions and The Seven Steps to Peace all live here.',
+  },
+  {
+    title: 'Live gatherings',
+    // PLACEHOLDER: confirm what live events the community offers.
+    body: 'Occasional live sessions and open conversations, announced in the community calendar.',
+  },
+  {
+    title: 'Community of Practice',
+    body: 'A space for certified practitioners to continue learning together. Certification includes six complimentary months.',
+  },
+];
+
+const agreements = [
+  'We listen to understand before we respond.',
+  'We speak from our own experience, and we hold others’ stories with care.',
+  'We are curious about difference rather than certain about it.',
+  'What is shared in confidence stays in confidence.',
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Community"
+  description="A community for exploring Conflict Intelligence together: conversations, free programs, live gatherings and a Community of Practice for certified practitioners."
+  jsonLd={breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Community', path: '/community'},
+  ])}>
+  <main>
+    <PageHero
+      eyebrow="Community"
+      title="We explore conflict better together"
+      lede="Practitioners, leaders, parents, educators and people working through a conflict of their own. Different starting points, one shared curiosity."
+      image="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1100&q=70"
+      alt="A group of friends sitting side by side with their arms around each other, facing the sea">
+      <Fragment slot="actions">
+        <a class="button" href={LINKS.join} data-guest-only>Join the community</a>
+        <a class="button ghost" href={LINKS.login} data-guest-only>Log in</a>
+        <a class="button" href={LINKS.community} data-member-only hidden>Open the community</a>
+      </Fragment>
+    </PageHero>
+
+    <section class="band band-canvas" aria-labelledby="inside-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Inside</p>
+          <h2 id="inside-heading">What we share there</h2>
+        </div>
+        <div class="grid grid-4">
+          {
+            inside.map(item => (
+              <div class="card">
+                <h3>{item.title}</h3>
+                <p class="muted">{item.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="agreements-heading">
+      <div class="wrap split">
+        <figure class="media">
+          <img
+            src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=1000&q=70"
+            alt="Three friends laughing together in warm evening light"
+            width="1000"
+            height="750"
+            loading="lazy"
+          />
+        </figure>
+        <div class="stack">
+          <p class="eyebrow">How we gather</p>
+          <h2 id="agreements-heading">Our community agreements</h2>
+          <p class="muted">A community about conflict is still a community with conflict. These are the ways we try to meet one another.</p>
+          <ul class="checklist">{agreements.map(item => <li>{item}</li>)}</ul>
+          <a class="text-link" href="/community/guidelines">Read the full Community Guidelines →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="practice-heading">
+      <div class="wrap">
+        <div class="cta-card">
+          <div>
+            <p class="eyebrow">For certified practitioners</p>
+            <h2 id="practice-heading">The Community of Practice</h2>
+            <p class="muted">
+              After the final certification session, practitioners receive six complimentary months in the Community
+              of Practice and a listing in the Practitioners Directory.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="button ghost" href="/certification">About certification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="join-heading" data-guest-only>
+      <div class="wrap reading stack" style="text-align: center; justify-items: center">
+        <h2 id="join-heading">Join us</h2>
+        <p class="muted">Joining takes about a minute. We look forward to meeting you.</p>
+        <div class="actions" style="justify-content: center">
+          <a class="button" href={LINKS.join}>Join the community</a>
+          <a class="button link" href={LINKS.login}>Already a member? Log in</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

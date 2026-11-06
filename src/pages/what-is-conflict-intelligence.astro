@@ -1,0 +1,179 @@
+---
+/**
+ * The definitional page: what Conflict Intelligence (CIQ) is, in words answer
+ * engines can quote. Static. FAQ answers are in the HTML and in FAQPage
+ * structured data (same list: `CIQ_FAQ` in `src/content/site.ts`).
+ */
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import PageHero from '../components/PageHero.astro';
+import {CIQ_DEFINITION, CIQ_FAQ, LEVELS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, faqJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+const PATH = '/what-is-conflict-intelligence';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    '@id': abs(origin, `${PATH}#definition`),
+    name: 'Conflict Intelligence',
+    alternateName: ['CIQ', 'Conflict Intelligence Quotient'],
+    description: CIQ_DEFINITION,
+    url: abs(origin, PATH),
+    inDefinedTermSet: {'@type': 'DefinedTermSet', name: ORG_NAME, url: abs(origin, '/')},
+  },
+  faqJsonLd(CIQ_FAQ),
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'What is Conflict Intelligence?', path: PATH},
+  ]),
+];
+
+const compare = [
+  {
+    label: 'Focus',
+    resolution: 'Ending the dispute',
+    ciq: 'Understanding what the conflict is made of',
+  },
+  {label: 'Pace', resolution: 'Towards agreement, often quickly', ciq: 'Unhurried; the pause is part of the work'},
+  {
+    label: 'What we look at',
+    resolution: 'Positions, interests and options',
+    ciq: 'Seven levels, from Space to Spirituality',
+  },
+  {label: 'Success looks like', resolution: 'A settlement', ciq: 'Insight, connection and growth; resolution may follow'},
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="What is Conflict Intelligence (CIQ)?"
+  description="Conflict Intelligence (CIQ) is the capacity to perceive, understand and engage with conflict wisely. As EQ is to emotions, CIQ is to conflict. A clear definition, how CIQ differs from conflict resolution, and how to develop it."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Definition"
+      title="What is Conflict Intelligence?"
+      lede="As emotional intelligence (EQ) is to emotions, Conflict Intelligence (CIQ) is to conflict. Here is what we mean by it, and how it can be developed."
+      image="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1100&q=70"
+      alt="People seated around a wooden table in conversation, notebooks open">
+    </PageHero>
+
+    <section class="band band-canvas" aria-labelledby="definition-heading">
+      <div class="wrap reading stack-lg">
+        <div class="definition" id="definition">
+          <p class="eyebrow" id="definition-heading">Conflict Intelligence (CIQ), defined</p>
+          <p><dfn>Conflict Intelligence (CIQ)</dfn>{CIQ_DEFINITION.replace(/^Conflict Intelligence \(CIQ\)/, '')}</p>
+        </div>
+        <div class="prose-block">
+          <h2>In plain words</h2>
+          <p>
+            Conflict is part of being human. It arrives in families, friendships, teams, classrooms and communities.
+            Conflict Intelligence is not about avoiding it, and not only about ending it. It is the capacity to stay
+            present when tension rises, to see what is really happening beneath the surface, and to respond in a way
+            that leaves people more connected than before.
+          </p>
+          <p>
+            Just as emotional intelligence helped us understand that feelings can be worked with skillfully,
+            Conflict Intelligence suggests that conflict itself can be worked with skillfully. It can be noticed,
+            understood, slowed down and learned from.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="levels-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">How we develop CIQ</p>
+          <h2 id="levels-heading">Seven levels present in every conflict</h2>
+          <p class="muted">
+            We explore Conflict Intelligence through the Seven Levels Framework. Each level is a different lens, and
+            each reveals something the others might miss.
+          </p>
+        </div>
+        <div class="level-grid">
+          {
+            LEVELS.map(level => (
+              <a class="card level-card" href={`/seven-levels#${level.slug}`} style={`--level: ${level.color}`}>
+                <span class="level-num">Level {level.n}</span>
+                <h3>{level.name}</h3>
+                <p class="muted">{level.short}</p>
+              </a>
+            ))
+          }
+          <a class="card level-card" href="/seven-levels" style="--level: var(--line-control)">
+            <span class="level-num">The framework</span>
+            <h3>See all seven levels</h3>
+            <p class="muted">Each level in depth, with a reflective question to carry with us.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="compare-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">A different emphasis</p>
+          <h2 id="compare-heading">Conflict resolution and Conflict Intelligence</h2>
+          <p class="muted">
+            Resolution and intelligence are companions, not rivals. Conflict Intelligence widens the view so that
+            whatever resolution comes is wiser and more lasting.
+          </p>
+        </div>
+        <div class="table-card">
+          <table class="compare">
+            <caption class="sr-only">Conflict resolution compared with Conflict Intelligence</caption>
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Conflict resolution</th>
+                <th scope="col">Conflict Intelligence (CIQ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                compare.map(row => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td>{row.resolution}</td>
+                    <td>{row.ciq}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="faq-heading">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <p class="eyebrow">Questions</p>
+          <h2 id="faq-heading">Frequently asked questions about Conflict Intelligence</h2>
+        </div>
+        <Faq items={CIQ_FAQ} openFirst />
+      </div>
+    </section>
+
+    <CtaBand
+      title="Where might we begin?"
+      body="A free seven-day challenge in nine videos, to help us notice conflict earlier and meet it with more care."
+      href="/challenge"
+      label="Begin the free challenge"
+      secondaryHref="/your-path"
+      secondaryLabel="See every path"
+    />
+  </main>
+</Base>

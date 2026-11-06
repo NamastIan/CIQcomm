@@ -1,0 +1,129 @@
+---
+/**
+ * Beyond Resolution: a free series of three live sessions for practitioners.
+ * First delivery August 3 to 7, 2026; the next is announced in the community
+ * (`LINKS.beyondResolution`). Static.
+ */
+import CtaBand from '../components/CtaBand.astro';
+import PageHero from '../components/PageHero.astro';
+import {LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const deliveries = [
+  {name: 'First delivery', dates: 'August 3 to 7, 2026', status: 'Completed'},
+  {name: 'Next delivery', dates: 'To be announced in the community', status: 'Planned'},
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWorkSeries',
+    name: 'Beyond Resolution: A Conflict Intelligence Series for Practitioners',
+    description:
+      'A free series of three live sessions for mediators, coaches, ombuds, HR and conflict professionals, exploring Conflict Intelligence through the Seven Levels Framework.',
+    url: abs(origin, '/beyond-resolution'),
+    isAccessibleForFree: true,
+    publisher: {'@type': 'Organization', name: ORG_NAME},
+    audience: {'@type': 'Audience', audienceType: 'Mediators, coaches, ombuds, HR and conflict professionals'},
+  },
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Your path', path: '/your-path'},
+    {name: 'Beyond Resolution', path: '/beyond-resolution'},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Beyond Resolution: a Conflict Intelligence series for practitioners"
+  description="Beyond Resolution is a free series of three live sessions for mediators, coaches, ombuds, HR and conflict professionals. The next delivery will be announced in the community."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Explore · Free · For practitioners"
+      title="Beyond Resolution"
+      lede="A free series of three live sessions for practitioners. For mediators, coaches, ombuds, HR and conflict professionals who sense there is more beneath the surface of the conflicts they hold."
+      image="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?auto=format&fit=crop&w=1100&q=70"
+      alt="A laptop showing a video call with many participants beside a cup of coffee">
+      <Fragment slot="actions">
+        <a class="button" href={LINKS.beyondResolution}>Hear about the next delivery</a>
+        <a class="button ghost" href="#deliveries">See the deliveries</a>
+      </Fragment>
+    </PageHero>
+
+    <section class="band band-canvas" aria-labelledby="why-heading">
+      <div class="wrap reading prose-block">
+        <p class="eyebrow">Why this series</p>
+        <h2 id="why-heading">Resolution is a moment. Intelligence is a practice.</h2>
+        <p>
+          Many of us were trained to move a conflict towards agreement. That training matters. Yet experienced
+          practitioners often notice that the most important things in a dispute live below the agreement: in whether everyone present feels safe,
+          in what people feel and fear, in who they believe they are, and in the deeper unity beyond the conflict.
+        </p>
+        <p>
+          Beyond Resolution is an invitation to look there together, across three live sessions, through the Seven
+          Levels Framework.
+        </p>
+      </div>
+    </section>
+
+    <section class="band" id="deliveries" aria-labelledby="deliveries-heading" style="scroll-margin-top: 64px">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <p class="eyebrow">Deliveries</p>
+          <h2 id="deliveries-heading">Three live sessions, offered more than once</h2>
+          <p class="muted">
+            The first delivery ran from August 3 to 7, 2026, and further deliveries are planned. The next delivery will
+            be announced in the community.
+          </p>
+        </div>
+        <div class="cohorts">
+          {
+            deliveries.map(delivery => (
+              <div class="cohort">
+                <div>
+                  <strong>{delivery.name}</strong>
+                  <span>{delivery.dates}</span>
+                </div>
+                <span class="badge">{delivery.status}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="who-heading">
+      <div class="wrap reading">
+        <div class="stack">
+          <p class="eyebrow">Who it is for</p>
+          <h2 id="who-heading">For the people who hold conflict for others</h2>
+          <ul class="checklist">
+            <li>Mediators</li>
+            <li>Coaches</li>
+            <li>Ombuds</li>
+            <li>HR and conflict professionals</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Hear about the next delivery"
+      body="The next delivery of Beyond Resolution will be announced in our community. Joining is free."
+      href={LINKS.beyondResolution}
+      label="Join the community"
+    />
+  </main>
+</Base>

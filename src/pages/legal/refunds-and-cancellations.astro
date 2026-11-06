@@ -1,0 +1,70 @@
+---
+/** Refunds and Cancellations. DRAFT pending legal review. Static. */
+import Legal from '../../layouts/Legal.astro';
+import {staticContext} from '../../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+---
+
+<Legal
+  site={site}
+  viewer={viewer}
+  title="Refunds and Cancellations"
+  path="/legal/refunds-and-cancellations"
+  description="Refunds and cancellations for the Conflict Exploration Kit and the Seven Levels Practitioner Certification from Conflict Intelligence Training.">
+  <section class="legal-section">
+    <h2>Free programs</h2>
+    <p>
+      The 7-Day Conflict Prevention Challenge, Beyond Resolution and The Seven Steps to Peace are free. There is nothing
+      to cancel or refund.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Conflict Exploration Kit</h2>
+    <ul>
+      <li>Refund requests are welcome within <mark>[REFUND WINDOW FOR THE KIT: Ian to confirm]</mark> of delivery.</li>
+      <li>Returned items must be <mark>[RETURN CONDITION: Ian to confirm]</mark>.</li>
+      <li>Return shipping is paid by <mark>[WHO PAYS RETURN SHIPPING: Ian to confirm]</mark>.</li>
+      <li>Once the live webinar has been attended: <mark>[REFUND TERMS AFTER THE WEBINAR: Ian to confirm]</mark>.</li>
+      <li>
+        If a kit arrives damaged or incorrect, please write to us within
+        <mark>[DAMAGED ITEM REPORTING WINDOW: Ian to confirm]</mark>, and we will
+        <mark>[REMEDY FOR DAMAGED OR INCORRECT ITEMS: Ian to confirm]</mark>.
+      </li>
+    </ul>
+  </section>
+
+  <section class="legal-section">
+    <h2>Seven Levels Practitioner Certification</h2>
+    <ul>
+      <li>Cancelling before the first session: <mark>[CERTIFICATION CANCELLATION TERMS BEFORE SESSION ONE: Ian to confirm]</mark>.</li>
+      <li>Cancelling after the first session: <mark>[CERTIFICATION CANCELLATION TERMS AFTER SESSION ONE: Ian to confirm]</mark>.</li>
+      <li>
+        The card deck and the copy of Resolving From Within shipped before session one:
+        <mark>[TREATMENT OF SHIPPED MATERIALS ON CANCELLATION: Ian to confirm]</mark>.
+      </li>
+      <li>Payment plans (7 payments of $378 USD): <mark>[INSTALMENT PLAN CANCELLATION TERMS: Ian to confirm]</mark>.</li>
+      <li>Moving to a later cohort: <mark>[COHORT TRANSFER POLICY: Ian to confirm]</mark>.</li>
+      <li>If we cancel or reschedule a cohort: <mark>[REMEDY IF WE CANCEL A COHORT: Ian to confirm]</mark>.</li>
+    </ul>
+  </section>
+
+  <section class="legal-section">
+    <h2>How refunds are made</h2>
+    <p>
+      Approved refunds are returned to the original payment method through Stripe within
+      <mark>[REFUND PROCESSING TIME: Ian to confirm]</mark>.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>How to ask</h2>
+    <p>
+      Write to <a href="mailto:hello@namasteintl.com">hello@namasteintl.com</a> with your name, what you purchased and the
+      date of your order. Nothing in this policy limits rights you have under consumer protection law.
+    </p>
+  </section>
+</Legal>

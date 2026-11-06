@@ -1,0 +1,190 @@
+---
+/**
+ * The 7-Day Conflict Prevention Challenge: the sign-up page. Free. Signing up
+ * is joining the community (`LINKS.challenge`, an App page: a plain link).
+ * Seven days, nine videos: an introduction, one per level, an integration.
+ * Introduction and Day 1 open at once, then one video a day; Day 7 ends with
+ * the wrap-up. Static, phone first.
+ */
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import PageHero from '../components/PageHero.astro';
+import {LEVELS, LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, faqJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+// The release schedule, as confirmed by Ian.
+// Day N is level N: Day 1 Space through Day 7 Spirituality.
+const schedule = LEVELS.map(level => ({
+  title: `Day ${level.n}: ${level.name}`,
+  body:
+    level.n === 1
+      ? 'The introduction and the Space video, both available as soon as we begin.'
+      : level.n === 7
+        ? 'The Spirituality video and the wrap-up, which brings the week together.'
+        : `The ${level.name} video.`,
+}));
+
+const faq = [
+  {q: 'Is the challenge really free?', a: 'Yes. The 7-Day Conflict Prevention Challenge is free.'},
+  {
+    q: 'How is the challenge structured?',
+    a: 'The challenge runs over seven days and is made of nine videos: an introduction, one video for each of the seven levels, and an integration to close. The introduction and the Day 1 video are available as soon as we begin, then one new video arrives each day, ending on Day 7 with the wrap-up. Each day follows one level, from Space on Day 1 to Spirituality on Day 7.',
+  },
+  {
+    q: 'Do we need any experience with conflict work?',
+    a: 'No. The challenge is written for anyone, including people in the middle of a conflict right now.',
+  },
+  {
+    q: 'Where do we find the videos?',
+    a: 'Inside our free online community. Joining is free.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: '7-Day Conflict Prevention Challenge',
+    description: 'A free seven-day challenge in nine videos: an introduction, one video for each of the seven levels of the Seven Levels Framework, and an integration.',
+    url: abs(origin, '/challenge'),
+    provider: {'@type': 'Organization', name: ORG_NAME, url: abs(origin, '/')},
+    isAccessibleForFree: true,
+    offers: {'@type': 'Offer', price: '0', priceCurrency: 'USD', category: 'Free'},
+  },
+  faqJsonLd(faq),
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Your path', path: '/your-path'},
+    {name: '7-Day Conflict Prevention Challenge', path: '/challenge'},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="7-Day Conflict Prevention Challenge"
+  description="A free seven-day challenge in nine videos: an introduction, one video for each of the seven levels of Conflict Intelligence, and an integration. No experience needed."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Explore · Free"
+      title="The 7-Day Conflict Prevention Challenge"
+      lede="Seven days and nine videos: an introduction, one video for each of the seven levels, and an integration. A gentle way to notice conflict earlier and meet it with more care."
+      image="https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1100&q=70"
+      alt="An open notebook with a pen and a pair of glasses on a wooden desk">
+      <div class="hero-meta">
+        <span class="badge accent">Free</span>
+        <span class="badge">7 days</span>
+        <span class="badge">9 videos</span>
+      </div>
+      <Fragment slot="actions">
+        <a class="button" href={LINKS.challenge}>Begin the challenge</a>
+        <a class="button ghost" href="#videos">See the nine videos</a>
+      </Fragment>
+    </PageHero>
+
+    <section class="band band-canvas" aria-labelledby="for-heading">
+      <div class="wrap split">
+        <div class="stack">
+          <p class="eyebrow">If you are in a conflict right now</p>
+          <h2 id="for-heading">You do not need to have it figured out</h2>
+          <p>
+            Perhaps something happened this week that is still with you. A conversation that went wrong, a silence that
+            will not lift, a relationship that feels heavy. This challenge does not ask us to fix anything. It asks us
+            to pause, notice and be a little kinder with ourselves while we do.
+          </p>
+          <p class="muted">
+            What might shift if, for seven days, we met conflict with curiosity instead of urgency?
+          </p>
+        </div>
+        <ul class="checklist card">
+          <li>Nine videos across seven days</li>
+          <li>One video for each of the seven levels</li>
+          <li>An introduction to begin and an integration to close</li>
+          <li>Free</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="band" id="videos" aria-labelledby="videos-heading" style="scroll-margin-top: 64px">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <p class="eyebrow">The structure</p>
+          <h2 id="videos-heading">Nine videos over seven days</h2>
+          <p class="muted">An introduction, one video for each of the seven levels, and an integration to close.</p>
+        </div>
+        <ol class="steps">
+          {
+            schedule.map(step => (
+              <li>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p class="muted">{step.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="how-heading">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <p class="eyebrow">How to begin</p>
+          <h2 id="how-heading">Three steps</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Join the free community</h3>
+              <p class="muted">Joining is free, on a phone or a computer.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Begin with the introduction</h3>
+              <p class="muted">The introduction and the Day 1 video are ready as soon as we begin.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>One video a day</h3>
+              <p class="muted">A new video arrives each day, ending on Day 7 with the wrap-up.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="actions" style="margin-top: 24px">
+          <a class="button" href={LINKS.challenge}>Begin the challenge</a>
+          <a class="button link" href={`${LINKS.login}?redirectTo=%2Fchallenge`}>Already a member? Log in</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="faq-heading">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <h2 id="faq-heading">Questions about the challenge</h2>
+        </div>
+        <Faq items={faq} />
+      </div>
+    </section>
+
+    <CtaBand
+      title="Curious what lies beyond the week?"
+      body="The Seven Levels Framework is the map the challenge is drawn from."
+      href="/seven-levels"
+      label="Explore the Seven Levels"
+    />
+  </main>
+</Base>

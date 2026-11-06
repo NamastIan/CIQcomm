@@ -1,0 +1,26 @@
+---
+/**
+ * An empty, clearly marked image slot. Shown ONLY in the editor Preview
+ * (`config.preview`): the published site renders nothing here until a real
+ * image replaces this component.
+ */
+import {config} from '../platform/config';
+
+interface Props {
+  /** What belongs here, e.g. "Portrait of Ian Renaud". */
+  label: string;
+  shape?: 'landscape' | 'square' | 'tall';
+}
+
+const {label, shape = 'landscape'} = Astro.props;
+---
+
+{
+  config.preview && (
+    <figure class:list={['image-slot', shape]} aria-label={`Empty image slot: ${label}`}>
+      <span class="eyebrow">Image slot · staging only</span>
+      <strong>{label}</strong>
+      <span class="note">Not shown on the live site until an image is added.</span>
+    </figure>
+  )
+}

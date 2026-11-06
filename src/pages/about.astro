@@ -1,0 +1,134 @@
+---
+/**
+ * About: Ian Renaud, author and guide, and the book Resolving From Within.
+ * Static. No photo of Ian or of the book cover yet: each has an empty slot
+ * (`ImageSlot`) that shows only in the editor Preview.
+ */
+import CtaBand from '../components/CtaBand.astro';
+import ImageSlot from '../components/ImageSlot.astro';
+import PageHero from '../components/PageHero.astro';
+import {ABOUT} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {config} from '../platform/config';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Ian Renaud',
+    jobTitle: 'Author and guide',
+    url: abs(origin, '/about'),
+    worksFor: {'@type': 'Organization', name: ORG_NAME, url: abs(origin, '/')},
+    knowsAbout: ['Conflict Intelligence', 'Seven Levels Framework', 'Mediation', 'Conflict coaching'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    name: 'Resolving From Within',
+    author: {'@type': 'Person', name: 'Ian Renaud'},
+    url: abs(origin, '/about#book'),
+  },
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'About', path: '/about'},
+  ]),
+];
+
+const values = [
+  {title: 'Depth over speed', body: 'We would rather understand a conflict well than end it quickly.'},
+  {title: 'Invitation, not instruction', body: 'We offer questions and practices. Each person finds their own way through them.'},
+  {title: 'Every level matters', body: 'From the felt sense of safety of everyone present to the deeper unity beyond conflict, nothing in a conflict is too small or too large to notice.'},
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title={ABOUT.title}
+  description="Ian Renaud is the author of Resolving From Within and the guide behind Conflict Intelligence Training, an online school and community for developing Conflict Intelligence."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="About"
+      title={ABOUT.title}
+      lede={ABOUT.lede}
+      image="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1100&q=70"
+      alt="A fountain pen resting on a handwritten page"
+    />
+
+    <section class="band band-canvas" aria-labelledby="story-heading">
+      <div class="wrap reading prose-block">
+        <ImageSlot label="Portrait of Ian Renaud" shape="square" />
+        <p class="eyebrow">About Ian</p>
+        <h2 id="story-heading">Author and guide</h2>
+        <p>
+          Ian Renaud is an author and a guide, and the author of <cite>Resolving From Within</cite>. He brings decades
+          of experience in professional coaching, informal conflict management and spiritual self-inquiry.
+        </p>
+        <p>
+          Ian developed the Seven Levels Framework, through which we explore and develop Conflict Intelligence. He has
+          written three books and coached hundreds of individuals.
+        </p>
+      </div>
+    </section>
+
+    <section class="band" id="book" aria-labelledby="book-heading" style="scroll-margin-top: 64px">
+      <div class:list={['wrap', config.preview ? 'split' : 'reading']}>
+        <div class="stack">
+          <p class="eyebrow">The book</p>
+          <h2 id="book-heading">Resolving From Within</h2>
+          <p>
+            <cite>Resolving From Within</cite> is Ian’s book on meeting conflict from the inside out. It explores how
+            the way we hold a conflict within ourselves shapes everything that happens between us, and it carries the
+            Seven Levels Framework from idea into daily practice.
+          </p>
+          <p class="muted">
+            Every participant in the Seven Levels Practitioner Certification receives a physical copy, shipped before
+            the first session.
+          </p>
+          <div class="actions">
+            <a class="button ghost" href="/certification">About certification</a>
+          </div>
+        </div>
+        <ImageSlot label="Cover of Resolving From Within" shape="tall" />
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="values-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">What guides us</p>
+          <h2 id="values-heading">How we hold this work</h2>
+        </div>
+        <div class="grid grid-3">
+          {
+            values.map(value => (
+              <div class="card">
+                <h3>{value.title}</h3>
+                <p class="muted">{value.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Begin where you are"
+      body="Explore the paths, or simply say hello."
+      href="/your-path"
+      label="Find your path"
+      secondaryHref="/contact"
+      secondaryLabel="Contact Ian"
+    />
+  </main>
+</Base>

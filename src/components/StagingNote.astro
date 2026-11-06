@@ -1,0 +1,16 @@
+---
+/**
+ * A note for the site owner, shown ONLY in the editor Preview
+ * (`config.preview`). The published site never renders it.
+ */
+import {config} from '../platform/config';
+---
+
+{
+  config.preview && (
+    <p class="staging-note" role="note">
+      <span class="eyebrow">Staging note</span>
+      <slot />
+    </p>
+  )
+}

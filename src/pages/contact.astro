@@ -1,0 +1,106 @@
+---
+/**
+ * Contact. No form for now: messages go by email (`LINKS.email`) or through
+ * the community. A stored contact form needs the Site Database, which is not
+ * enabled yet. Static.
+ */
+import PageHero from '../components/PageHero.astro';
+import {LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+const mail = (subject: string) => `mailto:${LINKS.email}?subject=${encodeURIComponent(subject)}`;
+
+const reasons = [
+  {title: 'A question about certification', body: 'Cohorts, tuition, payment plans or whether it is the right fit.', subject: 'Certification question'},
+  {title: 'Bringing CIQ to an organization', body: 'Workshops, team sessions or speaking invitations.', subject: 'Organization inquiry'},
+  {title: 'Schools and educators', body: 'Using The Seven Steps to Peace with a class or a school.', subject: 'Schools and educators'},
+  {title: 'Media and podcasts', body: 'Interviews and conversations about Conflict Intelligence.', subject: 'Media inquiry'},
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact',
+    url: abs(origin, '/contact'),
+    about: {'@type': 'Organization', name: ORG_NAME, email: LINKS.email},
+  },
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Contact', path: '/contact'},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Contact"
+  description="Contact Conflict Intelligence Training about certification, organizational work, schools, media or anything else."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Contact"
+      title="We would love to hear from you"
+      lede="A question, an idea, an invitation, or simply a hello. We read every message and reply as soon as we are able."
+      image="https://images.unsplash.com/photo-1473186578172-c141e6798cf4?auto=format&fit=crop&w=1100&q=70"
+      alt="Two empty chairs facing a calm sea">
+      <Fragment slot="actions">
+        <a class="button" href={mail('Hello')}>Email us</a>
+        <a class="button ghost" href={LINKS.join}>Join the community</a>
+      </Fragment>
+      <p class="note">{LINKS.email}</p>
+    </PageHero>
+
+    <section class="band band-canvas" aria-labelledby="reasons-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">How can we help?</p>
+          <h2 id="reasons-heading">Common reasons people write</h2>
+        </div>
+        <div class="grid grid-4">
+          {
+            reasons.map(reason => (
+              <a class="card" href={mail(reason.subject)}>
+                <h3>{reason.title}</h3>
+                <p class="muted">{reason.body}</p>
+                <span class="text-link">Email about this →</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="support-heading">
+      <div class="wrap split top">
+        <div class="stack">
+          <h2 id="support-heading">Already a member?</h2>
+          <p class="muted">
+            Questions about the challenge, the series or your account are often answered fastest inside the
+            community, where we and fellow members can help.
+          </p>
+          <div class="actions">
+            <a class="button ghost" href={LINKS.community}>Open the community</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>If you are in crisis</h3>
+          <p class="muted">
+            Conflict Intelligence Training is a learning community, not an emergency or counselling service. If you or
+            someone you know is in danger, please contact your local emergency services or a crisis line in your
+            country.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

@@ -1,0 +1,29 @@
+---
+/**
+ * Questions and answers as disclosure rows. The answers are in the HTML (open
+ * or closed), so search engines and answer engines read every one; pass the
+ * same list to `faqJsonLd` for the page's structured data.
+ */
+interface Props {
+  items: {q: string; a: string}[];
+  /** Open the first answer. */
+  openFirst?: boolean;
+}
+
+const {items, openFirst = false} = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((item, i) => (
+      <details open={openFirst && i === 0}>
+        <summary>
+          <h3>{item.q}</h3>
+        </summary>
+        <div class="answer">
+          <p>{item.a}</p>
+        </div>
+      </details>
+    ))
+  }
+</div>

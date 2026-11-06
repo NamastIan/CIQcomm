@@ -1,0 +1,58 @@
+---
+/**
+ * Community Guidelines, word for word as supplied by Ian. Static. The
+ * community app's own `/guidelines` page is outside this site and is edited
+ * in the community's dashboard.
+ */
+import Base from '../../layouts/Base.astro';
+import {breadcrumbJsonLd} from '../../lib/seo';
+import {siteOrigin} from '../../platform/api';
+import {staticContext} from '../../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Community Guidelines"
+  description="The Community Guidelines for the Conflict Intelligence Community: the ways we try to meet one another."
+  jsonLd={breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Community', path: '/community'},
+    {name: 'Community Guidelines', path: '/community/guidelines'},
+  ])}>
+  <main class="band">
+    <article class="wrap reading legal">
+      <header class="stack">
+        <p class="eyebrow brand">Community</p>
+        <h1>Community Guidelines</h1>
+        <p class="lede">
+          A community about conflict is still a community with conflict. These are the ways we try to meet one another.
+        </p>
+      </header>
+      <section class="legal-section" aria-label="Our agreements">
+        <ol>
+          <li>We listen to understand before we respond.</li>
+          <li>We speak from our own experience, and we hold others' stories with care.</li>
+          <li>We are curious about difference rather than certain about it.</li>
+          <li>What is shared in confidence stays in confidence.</li>
+        </ol>
+        <p>
+          When we share a situation from our work, we change or leave out anything that could identify the people
+          involved.
+        </p>
+        <p>Nothing shared here is advice. It is an invitation to explore.</p>
+        <p>
+          This is a learning community, not an emergency or counselling service. If you or someone you know is in
+          danger, please contact your local emergency services or a crisis line in your country.
+        </p>
+        <p>Posts that put someone at risk or break these agreements may be removed by the moderators.</p>
+      </section>
+    </article>
+  </main>
+</Base>

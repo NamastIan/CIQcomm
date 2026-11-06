@@ -1,0 +1,60 @@
+---
+/** Shipping. DRAFT pending legal review. Static. */
+import Legal from '../../layouts/Legal.astro';
+import {staticContext} from '../../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+---
+
+<Legal
+  site={site}
+  viewer={viewer}
+  title="Shipping"
+  path="/legal/shipping"
+  description="How Conflict Intelligence Training ships the Conflict Exploration Kit and certification materials: regions, costs and delivery times.">
+  <section class="legal-section">
+    <h2>What we ship</h2>
+    <ul>
+      <li>The Conflict Exploration Kit: the physical card deck and the companion workbook.</li>
+      <li>
+        For the Seven Levels Practitioner Certification: the physical card deck and a physical copy of Resolving From
+        Within, shipped before session one.
+      </li>
+    </ul>
+  </section>
+
+  <section class="legal-section">
+    <h2>Where, when and how much</h2>
+    <ul>
+      <li>We ship to <mark>[SHIPPING REGIONS: Ian to confirm]</mark>.</li>
+      <li>Shipping costs <mark>[SHIPPING COST: Ian to confirm]</mark>.</li>
+      <li>Orders leave us within <mark>[PROCESSING TIME BEFORE DISPATCH: Ian to confirm]</mark>.</li>
+      <li>Delivery usually takes <mark>[DELIVERY TIMES: Ian to confirm]</mark>.</li>
+      <li>Tracking: <mark>[TRACKING: Ian to confirm whether orders are tracked]</mark>.</li>
+      <li>
+        Customs duties and import taxes outside Canada are paid by
+        <mark>[DUTIES AND IMPORT TAXES: Ian to confirm]</mark>.
+      </li>
+    </ul>
+  </section>
+
+  <section class="legal-section">
+    <h2>Addresses</h2>
+    <p>
+      Please check your shipping address when you order. If a parcel is returned to us as undeliverable:
+      <mark>[UNDELIVERABLE PARCELS: Ian to confirm]</mark>. We share your name and address with the shipping carrier only
+      to deliver your order, as described in our <a href="/legal/privacy">Privacy Policy</a>.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Lost or damaged parcels</h2>
+    <p>
+      If a parcel is lost or arrives damaged, please write to
+      <a href="mailto:hello@namasteintl.com">hello@namasteintl.com</a>. Our
+      <a href="/legal/refunds-and-cancellations">Refunds and Cancellations</a> policy explains what happens next.
+    </p>
+  </section>
+</Legal>

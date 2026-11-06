@@ -1,0 +1,161 @@
+---
+/**
+ * The Seven Steps to Peace: the free children's picture book, for parents and
+ * educators. Static. Access through the community (`LINKS.childrensBook`).
+ */
+import CtaBand from '../components/CtaBand.astro';
+import PageHero from '../components/PageHero.astro';
+import {LEVELS, LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const uses = [
+  {
+    title: 'At home',
+    body: 'Read it together after a hard day, or before one. Each page offers a simple question a child can answer in their own words.',
+  },
+  {
+    title: 'In the classroom',
+    body: 'A gentle shared language for circle time, playground disagreements and the moments when big feelings arrive.',
+  },
+  {
+    title: 'In counselling and care',
+    body: 'A calm, picture-led way to begin conversations about conflict with children who find words difficult.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    name: 'The Seven Steps to Peace',
+    description:
+      'An 18-page illustrated picture book that helps children find words for big feelings and practise making peace, one step at a time.',
+    numberOfPages: 18,
+    bookFormat: 'https://schema.org/EBook',
+    audience: {'@type': 'PeopleAudience', audienceType: 'Children, parents and educators'},
+    isAccessibleForFree: true,
+    url: abs(origin, '/childrens-book'),
+    publisher: {'@type': 'Organization', name: ORG_NAME},
+  },
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Your path', path: '/your-path'},
+    {name: 'The Seven Steps to Peace', path: '/childrens-book'},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="The Seven Steps to Peace: a free picture book"
+  description="The Seven Steps to Peace is a free 18-page illustrated picture book for parents and educators, helping children find words for big feelings and practise making peace."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Explore · Free · For parents and educators"
+      title="The Seven Steps to Peace"
+      lede="An 18-page illustrated picture book that helps children find words for big feelings and practise making peace, one small step at a time. Free for families, classrooms and anyone who cares for children."
+      image="https://images.unsplash.com/photo-1544776193-352d25ca82cd?auto=format&fit=crop&w=1100&q=70"
+      alt="A young child and an adult reading together at a yellow table">
+      <div class="hero-meta">
+        <span class="badge accent">Free</span>
+        <span class="badge">18 illustrated pages</span>
+        <span class="badge">Read-aloud</span>
+      </div>
+      <Fragment slot="actions">
+        <a class="button" href={LINKS.childrensBook}>Get the free book</a>
+      </Fragment>
+    </PageHero>
+
+    <section class="band band-canvas" aria-labelledby="inside-heading">
+      <div class="wrap split">
+        <div class="stack">
+          <p class="eyebrow">Inside the book</p>
+          <h2 id="inside-heading">Seven steps a child can take</h2>
+          <p>
+            The Seven Steps to Peace is based on the Seven Levels Framework. Its seven steps are the seven levels,
+            carried gently into a child’s world.
+          </p>
+          <ol class="level-legend">
+            {
+              LEVELS.map(level => (
+                <li>
+                  <a href={`/seven-levels#${level.slug}`} style={`--level: ${level.color}`}>
+                    <span class="swatch" />
+                    <span class="num">0{level.n}</span>
+                    <span>
+                      <strong>{level.name}</strong>
+                      <small>{level.short}</small>
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="muted">
+            What might change in a family or a classroom if every child had words for each of those steps?
+          </p>
+        </div>
+        <figure class="media">
+          <img
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=70"
+            alt="A stack of books with a red apple and wooden alphabet blocks on a desk"
+            width="1000"
+            height="750"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="uses-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Ways to use it</p>
+          <h2 id="uses-heading">At home, at school and in care</h2>
+        </div>
+        <div class="grid grid-3">
+          {
+            uses.map(use => (
+              <div class="card">
+                <h3>{use.title}</h3>
+                <p class="muted">{use.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="adults-heading">
+      <div class="wrap reading prose-block">
+        <p class="eyebrow">For the grown-ups</p>
+        <h2 id="adults-heading">Children learn peace by watching us</h2>
+        <p>
+          The book is a beginning for children and an invitation for the adults reading it. Parents and educators who
+          would like to explore the same ideas for themselves might enjoy the free 7-Day Conflict Prevention Challenge.
+        </p>
+        <div class="actions">
+          <a class="button ghost" href="/challenge">The 7-Day Challenge</a>
+        </div>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Get The Seven Steps to Peace"
+      body="The book is free, and waiting for us inside our community."
+      href={LINKS.childrensBook}
+      label="Get the free book"
+    />
+  </main>
+</Base>

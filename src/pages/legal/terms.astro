@@ -1,0 +1,132 @@
+---
+/** Terms of Use. DRAFT pending legal review. Static. */
+import Legal from '../../layouts/Legal.astro';
+import {staticContext} from '../../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+---
+
+<Legal
+  site={site}
+  viewer={viewer}
+  title="Terms of Use"
+  path="/legal/terms"
+  description="The terms for using the Conflict Intelligence Training website, community, programs and products, operated by NAMASTE International Inc. (Canada).">
+  <section class="legal-section">
+    <h2>About these terms</h2>
+    <p>
+      These terms apply to the Conflict Intelligence Training website, our online community, our programs and our
+      products, all operated by NAMASTE International Inc. (Canada). By using any of them, you agree to these terms.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Your account</h2>
+    <ul>
+      <li>Please give accurate information when you join, and keep it up to date.</li>
+      <li>You are responsible for keeping your sign-in details private and for what happens under your account.</li>
+      <li>If you believe someone else has used your account, please tell us right away.</li>
+      <li>To join, members must be at least <mark>[MINIMUM AGE: Ian to confirm]</mark> years old.</li>
+    </ul>
+  </section>
+
+  <section class="legal-section">
+    <h2>Using the community</h2>
+    <p>
+      Our community is a place to learn about conflict together. Everyone who takes part agrees to follow our
+      <a href="/community/guidelines">Community Guidelines</a>. Moderators may remove posts that put someone at risk or
+      break those agreements.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Confidentiality</h2>
+    <p>
+      What is shared in confidence stays in confidence. Please do not share outside the community what other members
+      share inside it. When we share a situation from our work, we change or leave out anything that could identify the
+      people involved. We cannot guarantee that every member keeps confidence, so we invite everyone to share
+      thoughtfully.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>What you share</h2>
+    <p>
+      You keep ownership of what you post. By posting, you allow us to host and display it within the community so that
+      the community can work. You are responsible for having the right to share what you post.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Our intellectual property</h2>
+    <p>
+      The Seven Levels Framework, our programs, videos, live sessions, the Conflict Exploration Kit and its workbook, our
+      books and the content of this website belong to NAMASTE International Inc. or to those who license them to us. They
+      are for your own learning. Please do not copy, record, resell or teach them without our written permission.
+    </p>
+    <p>Use of our materials in professional practice: <mark>[PROFESSIONAL USE OF MATERIALS: Ian to confirm what is permitted]</mark>.</p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Not professional advice</h2>
+    <p>
+      Nothing shared on this website, in the community, in our programs or in our products is professional, legal,
+      medical or counselling advice. It is an invitation to explore. For advice about your own situation, please speak
+      with a qualified professional.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Not a crisis service</h2>
+    <p>
+      This is a learning community, not an emergency or counselling service. If you or someone you know is in danger,
+      please contact your local emergency services or a crisis line in your country.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Purchases</h2>
+    <p>
+      Prices are shown on this website in US dollars (USD). Payments are processed by
+      Stripe. Refunds and cancellations are described in our
+      <a href="/legal/refunds-and-cancellations">Refunds and Cancellations</a> policy, and delivery in our
+      <a href="/legal/shipping">Shipping</a> policy.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Ending your membership</h2>
+    <p>
+      You may close your account at any time by writing to
+      <a href="mailto:hello@namasteintl.com">hello@namasteintl.com</a>. We may suspend or close an account that breaks
+      these terms or the Community Guidelines. When an account closes, access to the community ends.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Limits of our responsibility</h2>
+    <p>
+      We offer our website, community, programs and products as they are. To the extent the law allows, NAMASTE
+      International Inc. is not responsible for indirect or consequential loss arising from their use. Nothing in these
+      terms limits rights you have under consumer protection law.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Changes to these terms</h2>
+    <p>
+      When we change these terms, we update the effective date above. When a change is significant, we tell members by
+      email or in the community.
+    </p>
+  </section>
+
+  <section class="legal-section">
+    <h2>Governing law</h2>
+    <p>
+      These terms are governed by the laws of the Province of <mark>[PROVINCE: Ian to confirm]</mark> and the federal laws
+      of Canada that apply there. Any dispute will be heard by the courts of that province.
+    </p>
+  </section>
+</Legal>

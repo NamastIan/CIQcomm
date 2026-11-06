@@ -1,0 +1,42 @@
+---
+/** The three-tier "Your Path": Explore (free), Build skills, Go deep. */
+import {TIERS} from '../content/site';
+
+interface Props {
+  /** The heading level of each tier's title. */
+  headingLevel?: 'h2' | 'h3';
+}
+
+const {headingLevel = 'h3'} = Astro.props;
+const Heading = headingLevel;
+---
+
+<div class="path-rail" aria-hidden="true">
+  <span>Explore</span><i></i><span>Build skills</span><i></i><span>Go deep</span>
+</div>
+<ol class="tiers" role="list">
+  {
+    TIERS.map((tier, i) => (
+      <li class:list={['tier', {featured: tier.key === 'explore'}]} id={`tier-${tier.key}`}>
+        <div class="tier-head">
+          <span class="tier-step">
+            <strong>0{i + 1}</strong> · {tier.label}
+          </span>
+          <span class:list={['badge', tier.key === 'explore' ? 'accent' : 'brand']}>{tier.badge}</span>
+        </div>
+        <Heading>{tier.title}</Heading>
+        <p class="muted">{tier.body}</p>
+        <ul class="tier-offers">
+          {tier.offers.map(offer => (
+            <li>
+              <a href={offer.href}>
+                {offer.title}
+                <span>{offer.meta}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))
+  }
+</ol>

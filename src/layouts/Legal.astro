@@ -1,0 +1,58 @@
+---
+/**
+ * A legal page: the website's header and footer (community name and logo),
+ * a reading column, the effective date and the operator. Every legal page is a
+ * DRAFT pending legal review: the staging note says so in the editor Preview.
+ * Undecided terms are written as visible bracketed fields (`<mark>[…]</mark>`).
+ */
+import StagingNote from '../components/StagingNote.astro';
+import type {Site, Viewer} from '../lib/types';
+import {breadcrumbJsonLd} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import Base from './Base.astro';
+
+interface Props {
+  site: Site | null;
+  viewer: Viewer;
+  title: string;
+  description: string;
+  path: string;
+}
+
+const {site, viewer, title, description, path} = Astro.props;
+const origin = siteOrigin(Astro.url);
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title={title}
+  description={description}
+  jsonLd={breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: title, path},
+  ])}>
+  <main class="band">
+    <article class="wrap reading legal">
+      <header class="stack">
+        <StagingNote>Draft pending legal review. Every bracketed field needs a decision before this page goes live.</StagingNote>
+        <p class="eyebrow brand">Legal</p>
+        <h1>{title}</h1>
+        <p class="muted">
+          Conflict Intelligence Training is operated by NAMASTE International Inc., a Canadian company. Questions about
+          this page are welcome at <a href="mailto:hello@namasteintl.com">hello@namasteintl.com</a>.
+        </p>
+        <p class="note">Effective date: <mark>[EFFECTIVE DATE: Ian to confirm]</mark></p>
+      </header>
+      <slot />
+      <nav class="footer-legal" aria-label="Other legal pages">
+        <a href="/legal/privacy">Privacy Policy</a>
+        <a href="/legal/terms">Terms of Use</a>
+        <a href="/legal/refunds-and-cancellations">Refunds and Cancellations</a>
+        <a href="/legal/shipping">Shipping</a>
+        <a href="/community/guidelines">Community Guidelines</a>
+      </nav>
+    </article>
+  </main>
+</Base>

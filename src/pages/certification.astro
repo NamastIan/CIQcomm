@@ -1,0 +1,212 @@
+---
+/**
+ * The Seven Levels Practitioner Certification: sales page. Facts in `CERT`
+ * (`src/content/site.ts`). Registration opens November 2026; until then the
+ * button invites people into the community to hear when it opens. Static.
+ */
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import PageHero from '../components/PageHero.astro';
+import {CERT, CERT_FAQ, LEVELS, LINKS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd, faqJsonLd, ORG_NAME} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'Seven Levels Practitioner Certification',
+    description:
+      'A 42-hour live, virtual certification across 14 Thursday sessions: one session for each of the seven levels of the Seven Levels Framework, specializations in mediation and conflict coaching, and opening and closing sessions. Graduates become Certified Seven Levels Practitioners.',
+    url: abs(origin, '/certification'),
+    provider: {'@type': 'Organization', name: ORG_NAME, url: abs(origin, '/')},
+    educationalCredentialAwarded: 'Certified Seven Levels Practitioner',
+    timeRequired: 'PT42H',
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'online',
+      startDate: '2027-01-21',
+      endDate: '2027-04-22',
+      courseSchedule: {'@type': 'Schedule', repeatFrequency: 'P1W', byDay: 'https://schema.org/Thursday'},
+    },
+    offers: {'@type': 'Offer', price: '2646.00', priceCurrency: 'USD', category: 'Paid'},
+  },
+  faqJsonLd(CERT_FAQ),
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'Your path', path: '/your-path'},
+    {name: 'Practitioner Certification', path: '/certification'},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="Seven Levels Practitioner Certification"
+  description="Become a Certified Seven Levels Practitioner: 42 hours across 14 live, virtual Thursday sessions, with specializations in mediation and conflict coaching. First cohort begins January 21, 2027."
+  jsonLd={jsonLd}>
+  <main>
+    <PageHero
+      eyebrow="Go deep"
+      title="Seven Levels Practitioner Certification"
+      lede="Fourteen live sessions to explore every level of conflict, with fellow practitioners and with Ian. For those who sense this is not only a skill, but a way of working."
+      image="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1100&q=70"
+      alt="A group of people seated in a circle, listening as one person speaks">
+      <div class="hero-meta">
+        <span class="badge brand">Registration opens {CERT.registrationOpens}</span>
+        <span class="badge">First cohort begins January 21, 2027</span>
+      </div>
+      <Fragment slot="actions">
+        <a class="button" href={LINKS.certificationInterest}>Hear when registration opens</a>
+        <a class="button ghost" href="#curriculum">See the curriculum</a>
+      </Fragment>
+    </PageHero>
+
+    <section class="band band-canvas" aria-label="At a glance">
+      <div class="wrap">
+        <dl class="facts">
+          <div>
+            <dt>Live learning</dt>
+            <dd>{CERT.hours} hours</dd>
+          </div>
+          <div>
+            <dt>Sessions</dt>
+            <dd>{CERT.sessions} Thursdays</dd>
+          </div>
+          <div>
+            <dt>Format</dt>
+            <dd>Virtual</dd>
+          </div>
+          <div>
+            <dt>Credential</dt>
+            <dd style="font-size: 18px">Certified Seven Levels Practitioner</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="band" id="curriculum" aria-labelledby="curriculum-heading" style="scroll-margin-top: 64px">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <p class="eyebrow">Curriculum</p>
+          <h2 id="curriculum-heading">Fourteen sessions, three hours each</h2>
+          <p class="muted">
+            We move through the framework one level at a time, then bring it into two specializations: the mediation
+            room and the coaching conversation.
+          </p>
+        </div>
+        <ol class="curriculum">
+          {
+            CERT.curriculum.map(part => (
+              <li>
+                <span class="count">
+                  {part.count} {part.count === 1 ? 'session' : 'sessions'}
+                </span>
+                <div>
+                  <h3>{part.label}</h3>
+                  <p>{part.body}</p>
+                  {part.count === 7 && (
+                    <div class="levels-inline">
+                      {LEVELS.map(level => (
+                        <span style={`--level: ${level.color}`}>
+                          <i class="swatch" />
+                          {level.name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="includes-heading">
+      <div class="wrap split">
+        <div class="stack">
+          <p class="eyebrow">Included</p>
+          <h2 id="includes-heading">Everything we need for the journey</h2>
+          <ul class="checklist">{CERT.includes.map(item => <li>{item}</li>)}</ul>
+        </div>
+        <figure class="media">
+          <img
+            src="https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1000&q=70"
+            alt="An open notebook with a pen and glasses, ready for reflection"
+            width="1000"
+            height="750"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="dates-heading">
+      <div class="wrap split top">
+        <div class="stack">
+          <p class="eyebrow">Dates</p>
+          <h2 id="dates-heading">Cohorts</h2>
+          <p class="muted">
+            Registration opens in {CERT.registrationOpens}. Sessions meet live on Thursdays, online.
+          </p>
+          <div class="cohorts">
+            {
+              CERT.cohorts.map(cohort => (
+                <div class="cohort">
+                  <div>
+                    <strong>{cohort.name}</strong>
+                    <span>{cohort.dates}</span>
+                  </div>
+                  <span class="badge">{cohort.note}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div class="card price-card" id="tuition">
+          <span class="badge brand">Tuition</span>
+          <h3>Seven Levels Practitioner Certification</h3>
+          <div class="price">
+            <strong>{CERT.price}</strong>
+            <span>USD, in full</span>
+          </div>
+          <p class="muted tnum">or {CERT.instalments}</p>
+          <ul class="checklist">
+            <li>{CERT.hours} hours across {CERT.sessions} live sessions</li>
+            <li>Card deck and book shipped before session one</li>
+            <li>Six months of Community of Practice access</li>
+            <li>Practitioners Directory listing</li>
+          </ul>
+          <a class="button" href={LINKS.certificationInterest}>Hear when registration opens</a>
+          <p class="note">Joining the community is free. We will share registration there in {CERT.registrationOpens}.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="faq-heading">
+      <div class="wrap reading">
+        <div class="section-intro">
+          <h2 id="faq-heading">Questions about certification</h2>
+        </div>
+        <Faq items={CERT_FAQ} />
+      </div>
+    </section>
+
+    <CtaBand
+      title="Not ready for certification yet?"
+      body="The free Beyond Resolution series is a gentle way to explore the framework as a practitioner first."
+      href="/beyond-resolution"
+      label="Explore Beyond Resolution"
+    />
+  </main>
+</Base>

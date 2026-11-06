@@ -1,0 +1,266 @@
+---
+/**
+ * The home page: PRERENDERED (built once, served as a static file, no server
+ * work per visit) and made of sections. Words in `src/content/site.ts`.
+ *
+ * What changes often is filled in by the browser after load, from the Site API:
+ *   - the visitor (`<Base isStatic>`): members see "Open the community"
+ *     (`data-member-only`), guests "Join" (`data-guest-only`)
+ *   - the latest blog posts (`data-live` section, below), hidden when empty
+ */
+import CtaBand from '../components/CtaBand.astro';
+import Mandala from '../components/Mandala.astro';
+import PathTiers from '../components/PathTiers.astro';
+import {AUDIENCES, CIQ_DEFINITION, LEVELS, LINKS, TESTIMONIALS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {organizationJsonLd} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+const jsonLd = [
+  organizationJsonLd(origin),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site?.name ?? 'Conflict Intelligence Community',
+    url: new URL('/', origin).href,
+  },
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  description="EQ is to emotions as CIQ is to conflict. An online school and community for developing Conflict Intelligence through the Seven Levels Framework, with free resources, a practitioner toolkit and certification."
+  jsonLd={jsonLd}>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-split">
+        <div class="hero-copy">
+          <p class="eyebrow brand">Conflict Intelligence Training</p>
+          <h1>EQ is to emotions as CIQ is to conflict</h1>
+          <p class="lede">
+            We are an online school and community for developing Conflict Intelligence. Together we explore conflict
+            through seven levels, from the felt sense of safety of everyone present to the deeper unity beyond conflict.
+          </p>
+          <div class="actions">
+            <a class="button" href="#path">Find your path</a>
+            <a class="button ghost" href="/what-is-conflict-intelligence">What is Conflict Intelligence?</a>
+          </div>
+        </div>
+        <figure class="media">
+          <img
+            src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=1100&q=75"
+            alt="Two hands reaching towards each other between tall stone walls"
+            width="1100"
+            height="825"
+            fetchpriority="high"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="levels-heading">
+      <div class="wrap split">
+        <div class="stack-lg">
+          <div class="stack">
+            <p class="eyebrow">The Seven Levels Framework</p>
+            <h2 id="levels-heading">Seven ways of seeing every conflict</h2>
+            <p class="muted">{CIQ_DEFINITION}</p>
+          </div>
+          <ul class="level-legend">
+            {
+              LEVELS.map(level => (
+                <li>
+                  <a href={`/seven-levels#${level.slug}`} style={`--level: ${level.color}`}>
+                    <span class="swatch" />
+                    <span class="num">0{level.n}</span>
+                    <span>
+                      <strong>{level.name}</strong>
+                      <small>{level.short}</small>
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <div>
+            <a class="button ghost" href="/seven-levels">Explore the Seven Levels</a>
+          </div>
+        </div>
+        <div class="media-first">
+          <Mandala />
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="path" aria-labelledby="path-heading" style="scroll-margin-top: 64px">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Your path</p>
+          <h2 id="path-heading">Three ways to walk with us</h2>
+          <p class="muted">
+            There is no single right place to begin. We might start with a free week of reflection, practise with
+            tools in hand, or step into a full practitioner certification.
+          </p>
+        </div>
+        <PathTiers />
+        <p style="margin: 24px 0 0">
+          <a class="text-link" href="/your-path">Compare the three tiers →</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="who-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Who gathers here</p>
+          <h2 id="who-heading">Whatever brought you to conflict, there is room for you</h2>
+        </div>
+        <div class="grid grid-4">
+          {
+            AUDIENCES.map(audience => (
+              <a class="card card-media" href={audience.href}>
+                <img src={audience.image} alt={audience.alt} width="800" height="500" loading="lazy" decoding="async" />
+                <div class="card-body">
+                  <h3>{audience.title}</h3>
+                  <p class="muted">{audience.body}</p>
+                  <span class="text-link">{audience.link} →</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="voices-heading">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Voices</p>
+          <h2 id="voices-heading">What people notice</h2>
+        </div>
+        <div class="grid grid-3">
+          {
+            TESTIMONIALS.map(t => (
+              <figure class="card quote-card">
+                <blockquote>“{t.quote}”</blockquote>
+                <footer>
+                  <span>{t.who}</span>
+                  {t.sample && <span class="badge sample">Sample</span>}
+                </footer>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="ian-heading">
+      <div class="wrap split">
+        <figure class="media">
+          <img
+            src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=70"
+            alt="A fountain pen writing on a page of a notebook"
+            width="1000"
+            height="750"
+            loading="lazy"
+          />
+        </figure>
+        <div class="stack">
+          <p class="eyebrow">Your guide</p>
+          <h2 id="ian-heading">Ian Renaud and Resolving From Within</h2>
+          <p class="muted">
+            Ian Renaud is the author of <cite>Resolving From Within</cite> and the guide behind Conflict Intelligence
+            Training. His work invites us to look beneath the surface of conflict and to meet it with presence rather
+            than fear.
+          </p>
+          <div class="actions">
+            <a class="button ghost" href="/about">Meet Ian</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" data-live="posts" hidden aria-labelledby="posts-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="posts-heading">From the journal</h2>
+          <a class="text-link" href="/blog">All resources →</a>
+        </div>
+        <div class="grid grid-3" data-list></div>
+      </div>
+    </section>
+
+    <div data-guest-only>
+      <CtaBand
+        title="A free first step"
+        body="The 7-Day Conflict Prevention Challenge unfolds over seven days in nine videos. What might a week of noticing reveal?"
+        href="/challenge"
+        label="Begin the challenge"
+        secondaryHref={LINKS.join}
+        secondaryLabel="Join the community"
+      />
+    </div>
+    <div data-member-only hidden>
+      <CtaBand
+        title="Welcome back"
+        body="The conversation continues in the community."
+        href={LINKS.community}
+        label="Open the community"
+      />
+    </div>
+  </main>
+</Base>
+
+<script>
+  import {formatDate} from '../lib/format';
+  import type {PostsPage} from '../lib/types';
+
+  /** One element with text: never HTML from an answer. */
+  const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className = '', text = '') => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  };
+
+  async function live<T>(name: string, path: string, render: (data: T, list: HTMLElement) => number) {
+    const section = document.querySelector<HTMLElement>(`[data-live="${name}"]`);
+    const list = section?.querySelector<HTMLElement>('[data-list]');
+    if (!section || !list) return;
+    try {
+      const res = await fetch(path, {headers: {accept: 'application/json'}});
+      if (!res.ok) return;
+      if (render((await res.json()) as T, list) > 0) section.hidden = false;
+    } catch {
+      // The section stays hidden: the page is complete without it.
+    }
+  }
+
+  void live<PostsPage>('posts', '/site-api/posts?perPage=3', (data, list) => {
+    for (const post of data.posts) {
+      const card = el('a', 'card card-media');
+      card.href = `/blog/${encodeURIComponent(post.slug)}`;
+      if (post.coverUrl) {
+        const img = el('img');
+        img.src = post.coverUrl;
+        img.alt = '';
+        img.loading = 'lazy';
+        card.append(img);
+      }
+      const body = el('div', 'card-body');
+      body.append(el('h3', '', post.title));
+      if (post.excerpt) body.append(el('p', 'muted', post.excerpt.slice(0, 140)));
+      body.append(el('p', 'note', formatDate(post.publishedAt)));
+      card.append(body);
+      list.append(card);
+    }
+    return data.posts.length;
+  });
+</script>

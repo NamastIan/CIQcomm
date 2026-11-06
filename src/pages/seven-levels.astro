@@ -1,0 +1,145 @@
+---
+/**
+ * The Seven Levels Framework: the mandala, then one section per level
+ * (`#space` … `#spirituality`), each with its colour, what it explores and a
+ * reflective question. Static. Words in `LEVELS` (`src/content/site.ts`).
+ */
+import CtaBand from '../components/CtaBand.astro';
+import Mandala from '../components/Mandala.astro';
+import {LEVELS} from '../content/site';
+import Base from '../layouts/Base.astro';
+import {abs, breadcrumbJsonLd} from '../lib/seo';
+import {siteOrigin} from '../platform/api';
+import {staticContext} from '../server/page';
+
+export const prerender = true;
+
+const {site, viewer} = await staticContext(Astro.request);
+const origin = siteOrigin(Astro.url);
+const PATH = '/seven-levels';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: 'The Seven Levels Framework',
+    description:
+      'A framework for exploring and developing Conflict Intelligence through seven levels present in every conflict.',
+    url: abs(origin, PATH),
+    hasDefinedTerm: LEVELS.map(level => ({
+      '@type': 'DefinedTerm',
+      name: level.name,
+      termCode: String(level.n),
+      description: `${level.short} ${level.body}`,
+      url: abs(origin, `${PATH}#${level.slug}`),
+    })),
+  },
+  breadcrumbJsonLd(origin, [
+    {name: 'Home', path: '/'},
+    {name: 'The Seven Levels Framework', path: PATH},
+  ]),
+];
+---
+
+<Base
+  site={site}
+  viewer={viewer}
+  isStatic
+  title="The Seven Levels Framework"
+  description="The Seven Levels Framework for Conflict Intelligence: Space, Emotions, Identity, Relationships, Expression, Intuition and Spirituality. What each level explores, with a reflective question for each."
+  jsonLd={jsonLd}>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-split">
+        <div class="hero-copy">
+          <p class="eyebrow brand">The framework</p>
+          <h1>The Seven Levels Framework</h1>
+          <p class="lede">
+            Every conflict holds more than one story. The Seven Levels offer a map for moving gently inward, from the
+            felt sense of safety of everyone present to the deeper unity beyond conflict. We can begin at any level, and each one deepens
+            the others.
+          </p>
+          <nav class="level-jump" aria-label="Jump to a level">
+            {
+              LEVELS.map(level => (
+                <a href={`#${level.slug}`} style={`--level: ${level.color}`}>
+                  <span class="swatch" />
+                  {level.name}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+        <div>
+          <Mandala base="" />
+          <p class="note" style="text-align: center; margin-top: 12px">
+            Space forms the outer ring; Spirituality rests at the centre. Select a ring to read about its level.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band-canvas" aria-labelledby="how-heading">
+      <div class="wrap">
+        <div class="grid grid-3">
+          <div class="stack">
+            <p class="eyebrow">How to read the map</p>
+            <h2 id="how-heading" style="font-size: 24px">Outer to inner, and back again</h2>
+          </div>
+          <div class="card">
+            <h3>Outer levels</h3>
+            <p class="muted">
+              Space, Emotions and Identity are often where conflict first becomes visible: whether everyone present feels safe, what we feel,
+              and what feels at stake for who we are.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Inner levels</h3>
+            <p class="muted">
+              Relationships, Expression, Intuition and Spirituality ask for slower attention: the patterns between us,
+              how we are heard, what we sense and the deeper unity beyond conflict.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      {
+        LEVELS.map(level => (
+          <section class="level-section" id={level.slug} style={`--level: ${level.color}`} aria-labelledby={`${level.slug}-h`}>
+            <div class="level-title">
+              <span class="level-mark">Level {level.n} of 7</span>
+              <h2 id={`${level.slug}-h`}>{level.name}</h2>
+              <p class="lede">{level.short}</p>
+            </div>
+            <div class="stack">
+              <p>{level.body}</p>
+              <div class="stack" style="gap: 8px">
+                <h3 style="font-size: 14px; color: var(--muted)">At this level we explore</h3>
+                <ul class="checklist">
+                  {level.explores.map(item => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <p class="question">
+                <span>A question to sit with</span>
+                {level.question}
+              </p>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+
+    <CtaBand
+      title="Practise the levels with others"
+      body="The Conflict Exploration Kit offers a physical card deck, a companion workbook and a live webinar, and the certification explores each level in a live session."
+      href="/conflict-exploration-kit"
+      label="See the Exploration Kit"
+      secondaryHref="/certification"
+      secondaryLabel="About certification"
+    />
+  </main>
+</Base>
