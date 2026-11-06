@@ -8,6 +8,7 @@
  * hostname: always plain `<a href>`, never a client-side route.
  */
 import '../styles/global.css';
+import '../styles/site.css';
 
 import BrandMark from '../components/BrandMark.astro';
 import {FOOTER, LINKS, NAV} from '../content/site';
@@ -49,6 +50,9 @@ const metaDescription = description ?? DEFAULT_DESCRIPTION;
 // canonical matches the sitemap and the links between pages.
 const path = Astro.url.pathname === '/' ? '/' : Astro.url.pathname.replace(/\/+$/, '');
 const canonical = new URL(path, siteOrigin(Astro.url)).href;
+// The website's editorial look (`site.css`, scoped to `.ciq`). The Community
+// Guidelines page belongs to the community's side and keeps its earlier look.
+const editorial = path !== '/community/guidelines';
 const ogImage = image ?? DEFAULT_IMAGE;
 const active = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`));
 const groupActive = (items: {href: string}[]) => items.some(item => active(item.href));
@@ -81,14 +85,23 @@ const chevron =
     {site?.favIcon && <link rel="icon" href={site.favIcon} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    />
+    {
+      editorial ? (
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap"
+        />
+      ) : (
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        />
+      )
+    }
     <link rel="preconnect" href="https://images.unsplash.com" />
     {ld.map(data => <script type="application/ld+json" set:html={ldJson(data)} />)}
   </head>
-  <body data-viewer={viewer.state} data-static={isStatic ? '1' : undefined}>
+  <body class={editorial ? 'ciq' : undefined} data-viewer={viewer.state} data-static={isStatic ? '1' : undefined}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap site-header-inner">

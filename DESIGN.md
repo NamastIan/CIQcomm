@@ -1,205 +1,99 @@
 ---
 version: alpha
-name: Indigo Ledger
-description: "Calm, precise and near-monochrome: cool greys, crisp white bordered cards, level Inter type, and one indigo-violet accent per view."
+name: Seven Levels Editorial
+description: "Calm, editorial and high contrast: white paper, large light serif headlines in Deep Navy, Near Black text, Orange only as an accent, level colours only where a level appears."
 colors:
-  primary: "#524EF0"
-  primary-hover: "#3A34DF"
-  accent: "#6662FF"
-  primary-ink: "#2B26AB"
-  edge-ink: "#141433"
-  primary-disabled: "#AAA8FF"
-  focus-halo: "#DDDCFF"
-  primary-wash-hover: "#E8E7FF"
-  primary-wash: "#F4F4FF"
-  background: "#FFFFFF"
-  whisper: "#FCFCFD"
-  hover-mist: "#F9FAFB"
-  canvas: "#F2F4F7"
-  line: "#EAECF0"
-  line-control: "#D0D5DD"
-  ink-disabled: "#98A2B3"
-  ink-subtle: "#667085"
-  ink-muted: "#475467"
-  ink-body: "#344054"
-  ink: "#101828"
-  inverse: "#14171D"
-  inverse-line: "#282D37"
-  on-inverse: "#F4F6FA"
-  on-inverse-body: "#C6CDDB"
-  success-wash: "#ECFDF3"
-  success-ring: "#ABEFC6"
-  success-ink: "#067647"
-  warning-wash: "#FFFAEB"
-  warning-ring: "#FEDF89"
-  warning-ink: "#B54708"
-  danger-wash: "#FEF3F2"
-  danger-ring: "#FECDCA"
-  danger-strong: "#D92D20"
-  danger-ink: "#B42318"
-  info-wash: "#EFF8FF"
-  info-ring: "#B2DDFF"
-  info-ink: "#175CD3"
+  near-black: "#252727"   # body text, navigation, dark sections, footer
+  deep-navy: "#1150AB"    # headlines, primary buttons, links
+  orange: "#F47324"       # accent only: rules, markers, icons, borders, overlines on dark
+  purple: "#935EB2"       # secondary accent, sparingly
+  white: "#FFFFFF"        # page and section backgrounds, text on dark
+  muted: "#555757"        # Near Black 78% over white, secondary text (7.27:1)
+  input-line: "#878888"   # Near Black 55% over white, input outlines (3.55:1)
+  tint-ink: "#F6F6F6"     # Near Black 4%: tonal bands, panels
+  tint-navy: "#F1F5FA"    # Deep Navy 6%: chips, hovers, current item
+  tint-navy-strong: "#ECF1F8" # Deep Navy 8%: legal fields still to confirm
+  on-navy-muted: "#DBE5F2" # white 85% over Deep Navy (5.98:1)
+  on-dark-muted: "#D0D1D1" # white 78% over Near Black (9.64:1)
+  border: "#E5E7EB"
+  error: "#B42318"
+levels:
+  space: "#E60012"
+  emotions: "#F47324"
+  identity: "#B99C0A"
+  relationships: "#419A5C"
+  expression: "#51A8E7"
+  intuition: "#6075AB"
+  spirituality: "#935EB2"
 typography:
-  display:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "36px"
-    fontWeight: 600
-    lineHeight: 1.15
-    letterSpacing: "-0.4px"
-  page-title:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "30px"
-    fontWeight: 600
-    lineHeight: 1.15
-    letterSpacing: "-0.4px"
-  heading:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "24px"
-    fontWeight: 600
-    lineHeight: 1.15
-    letterSpacing: "-0.4px"
-  card-title:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "16px"
-    fontWeight: 600
-    lineHeight: 1.35
-    letterSpacing: "-0.2px"
-  lead:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "18px"
-    fontWeight: 400
-    lineHeight: 1.6
-  body:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "16px"
-    fontWeight: 400
-    lineHeight: 1.6
-  body-sm:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "14px"
-    fontWeight: 400
-    lineHeight: 1.5
-  label:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "13px"
-    fontWeight: 500
-    lineHeight: 1.35
-  control:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "14px"
-    fontWeight: 500
-    lineHeight: 1
-    letterSpacing: "-0.05px"
-  caption:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "12px"
-    fontWeight: 400
-    lineHeight: 1.35
-  overline:
-    fontFamily: "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-    fontSize: "11px"
-    fontWeight: 600
-    lineHeight: 1.35
-    letterSpacing: "0.4px"
-rounded:
-  none: "0"
-  sm: "6px"
-  md: "8px"
-  lg: "10px"
-  xl: "12px"
-  round: "9999px"
-spacing:
-  space-1: "4px"
-  space-2: "8px"
-  space-3: "12px"
-  space-4: "16px"
-  space-5: "20px"
-  space-6: "24px"
-  space-8: "32px"
-  space-10: "40px"
-  space-12: "48px"
-  space-16: "64px"
-  container: "1440px"
-  gutter: "32px"
-  gutter-mobile: "16px"
-  card-padding: "20px"
-  button-sm: "28px"
-  button-md: "34px"
-  button-lg: "40px"
-  input: "36px"
+  serif: "Newsreader (Google Fonts), 400; headlines and expressive paragraphs"
+  sans: "Google Sans Flex (Google Fonts), 400-600; interface text"
+  display: "68px / 1.04 serif (40px at 390px wide)"
+  headline-lg: "50px / 1.06 serif (32px on phones)"
+  headline-md: "37px / 1.19 serif (28px on phones)"
+  headline-sm: "27px / 1.19 serif (22px on phones)"
+  body-lg: "20px / 1.5 serif (18px on phones)"
+  body-md: "16px / 1.5 sans"
+  body-sm: "13.5px / 20px sans"
+  label: "15.75px / 500 sans (buttons)"
+  nav: "14px sans"
+  overline: "12px / 500 sans, 0.08em tracking, uppercase"
+  caption: "12px sans"
+rounded: {sm: "4px", md: "8px", lg: "11px", full: "9999px"}
+spacing: {xs: "6px", sm: "14px", md: "28px", lg: "46px", xl: "72px"}
 ---
 
-# Indigo Ledger
+# Seven Levels Editorial
 
-Inter (Google Fonts, weights 400-700) is the only face, for headings and body alike; there is
-no display font. Turn on `font-feature-settings: "cv11" 1, "ss01" 1, "calt" 1`, and use tabular
-lining figures (`"tnum" 1, "lnum" 1`) for prices and stats. JetBrains Mono (Google Fonts) only
-for codes, never for prose.
+The public website's design system. Implemented in `src/styles/site.css`, every rule scoped
+to `.ciq` (the class `Base.astro` puts on `<body>`). The Community Guidelines page and the
+portal do not carry the class and keep the earlier look (`global.css`); leave them so.
 
-## Look and feel
+Adapted from an editorial reference system (warm serif, image-led, flat), re-keyed to the
+brand colours above. The brand rules win over the reference wherever they differ.
 
-1. **Near-monochrome.** Everything sits on the cool grey ramp (#FFFFFF, #F9FAFB, #F2F4F7, #EAECF0 ... #101828). Indigo-violet is the only saturated colour, used roughly once per view.
-2. **The One Accent Rule.** Exactly one brand-filled button per section. `primary` #524EF0 fills anything with a white label; `accent` #6662FF is for rings, focus edges, icons, an active underline or a small highlight, never under white text.
-3. **Two light surfaces.** White sections and cool-grey `canvas` #F2F4F7 bands alternate; white cards with a real 1px #EAECF0 border are the only boxes on a grey band.
-4. **Level, quiet type.** Headings are 600 weight, never 700+ for big type; tracking -0.4px. Sentence case everywhere (buttons, headings, nav). Uppercase only for the 11px overline eyebrow.
-5. **Flat depth.** A 1px border separates; a 1px contact shadow `0 1px 0 0 rgba(16,24,40,.06)` seats a card. Only floating things (menus, modals) cast a real shadow. Shadows mix from navy ink #101828, never pure black.
-6. **Tactile controls.** Filled buttons carry "edge physics": a sheen from 63.53% downward, a 1px inset bottom edge, a 1px contact shadow, and a 0.5px drop on press.
-7. **Rings, not borders, on controls.** Buttons and inputs draw inset box-shadow rings so nothing shifts by a pixel between states; cards keep a real border.
-8. **Motion is short.** 80-260ms, `cubic-bezier(0.16,1,0.3,1)` for entrances, 120ms `cubic-bezier(0.4,0,0.2,1)` for hovers. Never hover with opacity; step the grey ramp instead.
+## Colour
+- White pages; tonal bands in `tint-ink`; one Deep Navy closing band per page (`CtaBand`,
+  `.band-feature`); the footer in Near Black.
+- Headlines Deep Navy, text Near Black, secondary text `muted`.
+- Orange is never a button fill and never text on white (2.87:1). It is the rule before a
+  page eyebrow, the current-page underline, check icons, step rings, featured borders and the
+  footer's overline labels on Near Black (5.24:1).
+- Level colours appear only in level contexts (mandala, level cards, level sections, level
+  legends, swatches) and only as markers. Level names stay Near Black or Deep Navy text:
+  Emotions, Identity and Expression fail 3:1 on white. Swatches carry a thin Near Black ring.
+  Never recolour the mandala.
+- No teal, gold, cream, pastels or green (except Relationships).
+
+## Type
+Newsreader 400 for every headline, ledes, definitions, questions, quotes and blog prose;
+Google Sans Flex for interface text, body copy, labels, nav and buttons. Sentence case
+everywhere; uppercase only for the 12px overline.
 
 ## Components
+- **Primary button**: Deep Navy fill, white 15.75px/500 label, radius 11px, min-height 44px
+  (touch target; the reference's 41px is too small), hover Near Black. On Deep Navy it
+  inverts: white fill, Deep Navy label.
+- **Secondary**: transparent, 1px Near Black outline, radius 4px. **Link**: Deep Navy,
+  underlined. Links in running text are always underlined.
+- **Cards**: white, 1px `border`, radius 8px, 16px padding, no shadow. Linked cards turn the
+  border Deep Navy and underline the title on hover.
+- **Inputs**: white, 1px `input-line`, radius 8px, 12px 14px padding, 16px text.
+- **Chips/badges**: fully rounded, `tint-navy`, Near Black 13.5px. "Free" uses an Orange
+  outline; samples a muted outline.
+- **Focus**: 2px Deep Navy outline, 3px offset (white on dark grounds).
+- Flat: borders and tonal bands, never shadows, gradients or glass.
 
-**Buttons** - inline-flex, centred, 500 weight, -0.05px tracking, line-height 1, no border.
-- Sizes: small 28px / 0 10px / 12px / radius 6px; default 34px / 0 14px / 13px / radius 8px; large 40px / 0 18px / 14px / radius 8px. On a website, header and hero CTAs use large (40px); on touch screens grow to 44-48px.
-- Primary: fill #524EF0, text #FFFFFF, background `linear-gradient(180deg, transparent 63.53%, rgba(255,255,255,.16) 100%), #524EF0`, shadow `inset 0 -1px 0 0 rgba(20,20,51,.22), 0 1px 0 0 rgba(20,20,51,.10)`. Hover fill #3A34DF. Press: no sheen, `inset 0 1px 2px 0 rgba(20,20,51,.28)`, `translateY(0.5px)`. Disabled fill #AAA8FF.
-- Secondary (the default): fill #FFFFFF, text #101828, shadow `inset 0 0 0 1px rgba(16,24,40,.14), inset 0 -1px 0 0 rgba(20,20,51,.16), 0 1px 0 0 rgba(20,20,51,.06)`; hover fill #F9FAFB, active #F2F4F7.
-- Tinted (second brand-weighted action): fill #F4F4FF, text #2B26AB, ring #E8E7FF; hover fill #E8E7FF.
-- Tertiary / ghost: transparent, text #344054; hover fill #F9FAFB, text #101828.
-- Focus (all): `0 0 0 1px #FFFFFF, 0 0 0 3px #6662FF, 0 0 0 5px #DDDCFF` on `:focus-visible`.
+## Layout
+Container 1240px, gutters 46 / 28 / 20px. Sections 72px apart (46px on phones). Heroes in two
+columns (text, then the photo or the mandala), stacking below 860px. Reading column 760px.
+On phones the hero actions stack full width.
 
-**Cards** - bg #FFFFFF, 1px #EAECF0 border, radius 12px, padding 20px (24px on large marketing cards), shadow `0 1px 0 0 rgba(16,24,40,.06)`. Card title 16px/600. Only a card that is clickable as a whole lifts on hover: `0 2px 4px -2px rgba(16,24,40,.06), 0 4px 8px -2px rgba(16,24,40,.10)`. Pricing: the recommended plan gets a #6662FF 1.5px ring plus a tinted badge; its button is the section's single primary. Prices use tabular figures at 24-36px / 600.
+## Imagery
+Existing photographs stay as they are. Empty slots stay as marked slots (`ImageSlot`, Preview
+only). Never add stock photography, generated people or decorative imagery; a layout that
+needs a visual uses the mandala or text.
 
-**Inputs** (contact, newsletter) - bg #FFFFFF, height 36px (40px on mobile), padding 0 10px, radius 8px, 14px #101828 text, placeholder #667085, ring `inset 0 0 0 1px #D0D5DD`. Hover ring #98A2B3. Focus `inset 0 0 0 1.5px #6662FF, 0 0 0 3px #DDDCFF`. Invalid: ring #F04438, error text 12px #B42318 with an icon below. Disabled: fill #FCFCFD, text #98A2B3. Labels 13px/500 #344054 above the field, 6-8px gap; helper 12px #667085.
-
-**Badges** - status pills: height 22px, radius 9999px, padding 0 9px, 12px/500, a tone wash with a 1px ring, no leading dot.
-- Neutral #344054 on #F2F4F7; brand #2B26AB on #F4F4FF (ring #E8E7FF); success #067647 on #ECFDF3 (ring #ABEFC6); warning #B54708 on #FFFAEB (ring #FEDF89); danger #B42318 on #FEF3F2 (ring #FECDCA); info #175CD3 on #EFF8FF (ring #B2DDFF).
-- Tags (topics, blog categories) are rectangles: 22px, radius 6px, padding 0 8px, #F2F4F7, 12px/500 #344054. A pill means status; a rectangle means content.
-- Filter chips: 28px pills, white, ring `inset 0 0 0 1px #EAECF0`, 13px/500 #475467; active fill #F4F4FF, ring #DDDCFF, text #3A34DF. No counts in chips.
-
-**Nav (header)** - white bar, 56-64px tall, 1px #EAECF0 bottom hairline, inner max width 1440px, 32px gutters. Logo at the start; links 14px/500 #344054, 36px tall, radius 8px, padding 0 10px, hover fill #F2F4F7. Active link: #3A34DF text at 600 with a 2px #6662FF underline; never a brand-filled pill or left bar. One primary "Join" button at the end, one secondary beside it at most. On phones, a ghost menu button opens a white panel (radius 10px, popover shadow `0 8px 24px 0 rgba(16,24,40,.12), 0 2px 6px 0 rgba(16,24,40,.06)`).
-
-**Footer** - on #F2F4F7 with a 1px #EAECF0 top border (or, for one closing band, the dark ground #14171D with #282D37 hairlines, headings #F4F6FA, body #C6CDDB). Columns of links 14px #475467, hover #101828; group labels as the 11px/600 uppercase overline in #667085, 0.4px tracking. Bottom row 12px caption #667085.
-
-**Eyebrow** - 11px/600 uppercase, 0.4px tracking, #475467 (or #524EF0 once per page).
-
-## Layout & spacing
-
-- One 4px scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64. Lay out with grid/flex `gap`, never margin stacking.
-- Container max 1440px; gutters 32px desktop, 16px phone. Reading column (blog posts, about story) about 720px.
-- "Density with air": tight inside groups, 16-24px between groups, 48-64px between sections (64px top/bottom for full bands).
-- Hero: headline 36px/600 (30px on phones), lead 18px #475467 max ~36rem, then a button row (gap 8-12px). Image beside it on desktop, below on phones.
-- Card grids: 3 columns desktop, 2 tablet, 1 phone, gap 24px; equal card heights per row. No horizontal scroll at 360px.
-
-## Photography & imagery
-
-- Real photographs only: real people learning, meeting, working, the real place. No cartoons, illustrations, 3D shapes, patterns, textures or grey placeholders (the source system rejects illustration outright).
-- Images sit in a 12px-radius frame with a 1px #EAECF0 border, `object-fit: cover`, fixed aspect ratio (16:9 for blog/program covers, 4:3 or 1:1 for portraits).
-- Cool, neutral, evenly lit grading that suits the grey ramp; avoid heavy colour filters or duotones. Never put text over a busy photo; place copy beside or below it.
-- No gradient overlays, frosted glass or backdrop blur on images.
-
-## Do / Don't
-
-**Do**
-- Do keep exactly one #524EF0 filled button per section; everything else is secondary, tinted or ghost.
-- Do use #6662FF for focus rings, active underlines and icons, and #524EF0 wherever white text sits on brand.
-- Do give filled buttons the sheen + inset edge + contact shadow, and inputs inset rings.
-- Do write sentence-case, verb-first labels ("Join the community", "See programs").
-
-**Don't**
-- Don't use gradients as backgrounds, glassmorphism, patterns, textures or illustrations.
-- Don't add extra brand colours or use colour as decoration; status colours are for status only.
-- Don't give cards coloured left borders, gradient headers or icon medallions.
-- Don't use heavy headline weights (700+), Title Case, or uppercase beyond the eyebrow.
-- Don't hover with opacity or cast shadows from pure black; don't stack more than two floating layers.
-- Don't put white text on #6662FF (too low contrast); use #524EF0.
+## Motion and tone
+Calm and unhurried: 200-400ms colour and opacity transitions only; none under
+`prefers-reduced-motion`. No urgency styling, countdowns, "limited" or "sold out" treatments.
